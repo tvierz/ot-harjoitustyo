@@ -1,5 +1,4 @@
 # Otsikkona tehtavat
-/n
 
 _tehtava vk1 on **tehty** luultavasti_
 
