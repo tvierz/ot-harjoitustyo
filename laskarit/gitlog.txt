@@ -1,0 +1,106 @@
+commit 42c8497951d3f127de6a158bdc1a023aee0c3d10
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 13:20:45 2018 +0200
+
+    removed f1, renamed f2 -> f1
+
+ files/file1 | 1 -
+ files/file2 | 0
+ 2 files changed, 1 deletion(-)
+
+commit c742b78161df4dc7ce506d13dcf8cf6bb75700af
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 13:16:56 2018 +0200
+
+    made new dir and 3 files under it
+
+ files/file1 | 1 +
+ files/file2 | 0
+ files/file3 | 0
+ 3 files changed, 1 insertion(+)
+
+commit 8defacad2e10930647c47bb7e77b0ed481865a46
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 13:10:37 2018 +0200
+
+    2modified 1. and 3.
+
+ first      | 50 +++++++++++++++++++++++---------------------------
+ thirdo.txt |  1 +
+ 2 files changed, 24 insertions(+), 27 deletions(-)
+
+commit 244399d146f1b50554babd8946363fdb6b16c9cf
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 13:08:21 2018 +0200
+
+    renamed tiedosto -> first
+
+ first        | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ tiedosto.txt | 57 ---------------------------------------------------------
+ 2 files changed, 57 insertions(+), 57 deletions(-)
+
+commit e2bd86305a8cef8aa301c6bf8182beaea4aeec9d
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 13:06:20 2018 +0200
+
+    deleted 2.
+
+ secondary | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit fc3e32bf0eafc939e62ac381d9038fa1c7af505b
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 13:03:53 2018 +0200
+
+    tiedosto.txt
+
+ tiedosto.txt | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
+
+commit 6ac7b6b5c1facbcc8189e685b4a291bdb71ecd0e
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 12:58:27 2018 +0200
+
+    modified all.txt
+
+ n/all.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 601bab6ddaa256ef23dce816e1d6f1affd7df543
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 12:57:34 2018 +0200
+
+    made dir n and added aall.txt
+
+ n/all.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit a85bc6c61330b3048c3f9890e32b7b5ad9b1c073
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 12:55:20 2018 +0200
+
+    modified 2. and 3.
+
+ secondary  | 1 +
+ thirdo.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit a292e96c44cb1f503b2f1902bfdb6ab088bdb0b7
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 12:52:45 2018 +0200
+
+    change and addition
+
+ secondary    | 0
+ tiedosto.txt | 3 +++
+ 2 files changed, 3 insertions(+)
+
+commit fa277399614cd9344d24a8f49ae2b98f7810f7ff
+Author: ti <tvierine@helsinki.fi>
+Date:   Wed Oct 31 12:49:31 2018 +0200
+
+    tiedosto.txt created
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
