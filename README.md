@@ -6,5 +6,5 @@
 [gitlog.txt](https://github.com/tvierz/ot-harjoitustyo/blob/master/laskarit/gitlog.txt)
 
 
-#####viikko 2
+##### viikko 2
 PENDING
