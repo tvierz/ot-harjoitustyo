@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * @author tvierine
  */
 public class MaksukorttiTest {
-    
+
     //Defines local variable that can be given value later
     Maksukortti kortti;
 
@@ -29,21 +29,6 @@ public class MaksukorttiTest {
 
     public MaksukorttiTest() {
     }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-//
-//     TODO add test methods here.
-//     The methods must be annotated with annotation @Test. For example:
 
     @Test
     public void hello() {
@@ -91,18 +76,30 @@ public class MaksukorttiTest {
         assertEquals("Kortilla on rahaa 6.0 euroa", kortti.toString());
     }
 
-////Tests whether or not the card's value can go negative
+////Makes sure that the card's value can't go negative when using syoEdullisesti()
     @Test
     public void syoEdullisestiEiVieSaldoaNegatiiviseksi() {
 
-        kortti.syoMaukkaasti();
-        kortti.syoMaukkaasti();
+        for (int i = 0; i < 2; i++) {
+            kortti.syoMaukkaasti();
+        }
         // nyt kortin saldo on 2
         kortti.syoEdullisesti();
 
         assertEquals("Kortilla on rahaa 2.0 euroa", kortti.toString());
     }
-    
+
+////Makes sure that the card's value can't go negative when using syoMaukkaasti()
+    @Test
+    public void syoMaukkaastiEiVieSaldoaNegatiiviseksi() {
+        for (int i = 0; i < 2; i++) {
+            kortti.syoMaukkaasti();
+        }
+        //kortin saldo = 2
+        kortti.syoMaukkaasti();
+        assertEquals("Kortilla on rahaa 2.0 euroa", kortti.toString());
+    }
+
 ////Test that the card can be charged with value
     @Test
     public void kortilleVoiLadataRahaa() {
@@ -115,5 +112,36 @@ public class MaksukorttiTest {
     public void kortinSaldoEiYlitaMaksimiarvoa() {
         kortti.lataaRahaa(200);
         assertEquals("Kortilla on rahaa 150.0 euroa", kortti.toString());
+    }
+
+////Tests that negative values can't be charged on the card
+    @Test
+    public void kortilleEiVoiLadataNegatiivistaArvoa() {
+        kortti.lataaRahaa(-30);
+        assertEquals("Kortilla on rahaa 10.0 euroa", kortti.toString());
+    }
+
+////Tests that 2.5 euros of value allows syoEdullisesti() aka card's value can go to 0
+    @Test
+    public void syoEdullisestiVoiViedaNollaan() {
+        for (int i = 0; i < 3; i++) {
+            kortti.syoEdullisesti();
+        }
+        kortti.syoEdullisesti();
+        assertEquals("Kortilla on rahaa 0.0 euroa", kortti.toString());
+    }
+
+////Tests that syoMaukkaasti can make the card's value go to 0
+    @Test
+    public void syoMaukkaastiVoiViedaNollaan() {
+        kortti.lataaRahaa(4);
+        //arvo nyt 14 euroa
+        for (int i = 0; i < 4; i++) {
+            kortti.syoEdullisesti();
+        }
+        //arvo nyt 4 euroa
+        kortti.syoMaukkaasti();
+        //arvo pitaisi olla nyt 0
+        assertEquals("Kortilla on rahaa 0.0 euroa", kortti.toString());
     }
 }
