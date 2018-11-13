@@ -1,0 +1,88 @@
+Silk Spinner budjettisovellus VAATIMUSMÄÄRITTELY
+"Spin your own silk the way you want it"
+
+Sovelluksen tarkoitus on helpottaa käyttäjien budjetinhallintaa tekemällä sovellus jolle voidaan antaa jonkin aikavälin budjetti
+Sovellus tarkastelee rahankäyttöä joltakin aikaväliltä ja lopuksi kertoo onko pysytty budjetissa.
+
+
+
+Ohjelma
+-Ohjelmalla alustavasti vain peruskäyttäjiä
+
+-Toimii windowsilla ja linuxilla
+
+-tallentaa tiedot levylle ja/tai tietokantaan
+
+-Sovelluksen käyttöliittymä
+	viisi ikkunaa
+		kirjautumisnäkymä
+			linkki uuden käyttäjätunnuksen luomiseen
+		uuden käyttäjätunnuksen luomisnäkymä
+		yleiskatsaus käyttäjän käyttötilistä
+			siirtyminen tileihin ja asetuksiin
+			uloskirjautuminen
+		asetukset
+			turvasanan luominen
+		tilit
+			tilien käyttö
+
+
+
+
+Perustoiminnallisuus
+
+Ennin kirjautumista
+-Käyttäjä voi luoda tunnuksen järjestelmään
+	käyttäjätunnuksessa ei erikoismerkkejä, tunnusten täytyy olla uniikkeja
+	Käyttäjätunnuksella on käyttäjän nimi ja salasana ja turvasana
+
+-Käyttäjä voi kirjautua järjestelmään käyttäjänimellään ja salasanallaan
+	Jos syötettyä käyttäjätunnusta ei ole olemassa tai salasana on väärä, ohjelma ilmoittaa että kirjautuminen epäonnistui
+	Käyttäjä kirjataan sisään jos nimi ja salasana ovat oikein
+
+Kirjautumisen jälkeen
+	Käyttäjän omat tiedot näkyvät vain käyttäjälle itselleen
+
+-Käyttäjä voi poistaa tilinsä
+	Poistetun käyttäjän tiedot häviävät eikä niitä voida palauttaa
+
+-Käyttäjätunnuksen luomisen yhteydessä käyttäjätilille luodaan uusi budjettitili
+	tilille voidaan kirjata rahankäyttö kätevästi kommentteineen esimerkiksi "1,30 €, välipala leipä, elintarvike"
+
+-Voi luoda turvasanan
+	turvasanaa voidaan alustavasti käyttää toisena salasanana
+
+-Voi tulostaa jonkin aikavälin yleiskuvan tilitapahtumista ja tarkastella niitä tarkemmin(tapahtumat kommentteineen) haluttaessa
+	Tarkastelua varten ohjelmalle annetaan aikaväli
+	Tuloste on kuvaa normaalisti annetun budjetin, käytetyn rahamäärän ja budjetin ja käytetyn rahan erotuksen
+	Tarkemmassa tarkastelussa voidaan tutkia kaikkia tapahtumia ohjelmalle annetulta aikaväliltä kommentteineen
+
+-Käyttäjä voi kirjautua ulos
+
+
+
+
+Jatkokehitysideoita
+Perusversiota täydennetään esimerkiksi seuraavilla toiminnallisuuksilla, tätä listää täydennetään tarpeen vaatiessa
+
+-Käyttäjän tilin ylesitarkastelussa kuvataan miten rahankäyttö on jakautunut yleismmällä tasolla esim vapaa-aika, ruoka, vuokra, auto
+-käyttäjä voi luoda uuden tilin johon kirjataan jonkin muun rahankäyttö, esim käyttäjän yrityksen ja yksityiselämän tilit
+-käyttäjä voi luoda budjettisuunnitelman joka vertaa tilin tapahtumia suunnitelmaan ja varoittaa suunnitelmasta poiketessa
+-käyttäjä voi poistaa budjettisuunnitelman
+-käyttäjä voi verrata budjettisuunnitelmaa tilitapahtumiin
+-Käyttäjää varoitetaan kun budjettisuunnitelma ylitetään
+-Käyttäjälle ilmoitetaan kun budjettisuunnitelma alitetaan
+-Käyttäjälle ilmoitetaan jos budjettisuunnitelma ylittyisi nykyisien menojen tahdilla
+-Tilitapahtumien yksinkertaistaminen
+	lisätään nappeja eri menoille esim elintarvikkeet, jonka jälkeen voidaan lisätä kategoriaan menot ja haluttaessa kommentit
+
+
+
+-Superkäyttäjä(admin) luominen
+-Superkäyttäjä(admin) Näkee kuinka monta käyttäjää sovelluksella on
+-Superkäyttäjä(admin) Voi lukita peruskäyttäjän tunnuksen
+-Superkäyttäjä(admin) Voi poistaa peruskäyttäjätunnuksen
+-Superkäyttäjä(admin) Voi palauttaa käyttäjän tilin, peruskäyttäjän rekisteröimän turvasanan avulla.
+
+
+
