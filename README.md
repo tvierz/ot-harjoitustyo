@@ -13,3 +13,6 @@
 
 
 [Screenshot of the test coverage](https://github.com/tvierz/ot-harjoitustyo/blob/master/laskarit/viikko2/Screenshot%20from%202018-11-07%2015-44-33.png)
+
+[Alustava määrittelydokumentti](https://github.com/tvierz/ot-harjoitustyo/blob/master/laskarit/viikko2/alustava%20m%C3%A4%C3%A4rittelydokumentti)
+[Työaikakirjanpito](https://github.com/tvierz/ot-harjoitustyo/blob/master/Ty%C3%B6aikakirjanpito)
