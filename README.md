@@ -8,4 +8,4 @@
 
 
 ##### Sovellus
-[viikko 3 release]
+[viikko 3 release](https://github.com/tvierz/ot-harjoitustyo/tree/master/SilkSpinner)
