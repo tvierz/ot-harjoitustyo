@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.silkspinner;
+package silkspinapp;
 
 /**
  *
  * @author tvierine
+ * 
+ * The purpose of this class is to define how the software functions
  */
-public class SilkSpinnerMain {  
-    public static void main(String[] args) {
-        int a = 92;
-        System.out.println(a);
-    }
-
-      
-}
+public class SilkSpinLogic {
     
-
+}
