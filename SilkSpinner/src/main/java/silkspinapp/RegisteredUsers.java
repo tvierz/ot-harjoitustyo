@@ -38,6 +38,9 @@ public class RegisteredUsers {
         return userlist.containsKey(u);//if username on the list, returns true, false is returned otherwise
         
     }
+    public void removeUser(String u){           //removes all userdata from the program
+        userlist.remove(u, userlist.get(u));
+    }
     
     
    

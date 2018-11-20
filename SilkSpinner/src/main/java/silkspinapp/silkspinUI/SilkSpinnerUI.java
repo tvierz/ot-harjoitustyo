@@ -81,6 +81,8 @@ public class SilkSpinnerUI extends Application {
         TextField insertUser = new TextField();
         TextField insertPass = new TextField();
         
+            ru.listUser(testuser);
+        
         
         
         userInput.getChildren().addAll(loginUser, insertUser);
@@ -100,7 +102,6 @@ public class SilkSpinnerUI extends Application {
         Button loginbtn = new Button("Login");
         Button registerButton = new Button("Register new account");
         loginbtn.setOnAction(a -> {                             //attempt to log in
-            ru.listUser(testuser);
             Boolean x = true;
             String usersname = insertUser.getText();            //gets the entire username entered
             String password = insertPass.getText();             //gets the entire password
@@ -112,6 +113,15 @@ public class SilkSpinnerUI extends Application {
                     insertPass.setText("");
                     loginLabel.setText("Entering");
             menuEntries.setText(usersname + "You have logged in");//tells user they have logged in
+
+                    primaryStage.setScene(userScene);                  //logs user to their account screen
+                }
+                if (ru.getUser(usersname).getSafeword().equals(password)) {//allows logging in with safeword
+                    loggeduser = ru.getUser(usersname);                 //tells us who the logged user is
+                    insertUser.setText("");//cleans account and password boxes so they are clear on logout
+                    insertPass.setText("");
+                    loginLabel.setText("Entering");
+            menuEntries.setText(usersname + " you have logged in");//tells user they have logged in
 
                     primaryStage.setScene(userScene);                  //logs user to their account screen
                 }
@@ -129,7 +139,7 @@ public class SilkSpinnerUI extends Application {
         loginScreen = new Scene(loggingscreenBg, 600, 400);                              //tells how loginscreen looks like
         
 
-        registerButton.setOnAction(a -> {
+        registerButton.setOnAction(a -> {                   //clears textboxes from registration screen
             creation.setText("");
             insertUser.setText("");
             insertPass.setText("");
@@ -188,8 +198,8 @@ public class SilkSpinnerUI extends Application {
         });
         
         
-        regginscreen.getChildren().addAll(creation, registerus, registpas, registbtn, returnbtn);
-        newUserScreen = new Scene(regginscreen, 600, 400);
+        regginscreen.getChildren().addAll(creation, registerus, registpas, registbtn, returnbtn);   //puts registration screen items on the VBox
+        newUserScreen = new Scene(regginscreen, 600, 400);                                          //puts registration VBox onto the screen
         
         
         
@@ -204,25 +214,40 @@ public class SilkSpinnerUI extends Application {
         Button accountbtn = new Button("Account management");       // enters logged user to their accounts
         Button settingsbtn = new Button("Settings");                //enters the user to their settings
         Button logoutbtn = new Button("logout");
-        Button backbtn = new Button("Back to user screen");         //creates button returning user to their account page
+        Button backbtn1 = new Button("Back to userscreen");         //creates button returning user to their account page from accounts
+        Button backbtn2 = new Button("Back to userscreen");          //backbutton to userscreen from settings
         Button displaybtn = new Button("Display your account data");
         Button enterbtn = new Button("Enter data to your account");
         Button safebtn = new Button("Confirm safeword");
+        Button removebtn = new Button("Permanently remove your account and all data on it");
         Label displayacc = new Label();
+        
         
         settingsbtn.setOnAction(a ->{                                //gives functionality to the buttons in userscreen
             menuEntries.setText("Set your safeword and press confirm to link it to your account");
             primaryStage.setScene(settingScene);
         });
+        removebtn.setOnAction(a -> {
+            primaryStage.setScene(loginScreen);                 //logs user out and removes their account
+            ru.removeUser(loggeduser.getUsername());
+            displayacc.setText("");
+            loggeduser =  null;                                 //nulls logged user
+            loginLabel.setText("Accoutn succesfully removed, goodbye");         //displays succsessful account removal in login screen
+        });
         accountbtn.setOnAction(a ->{
             primaryStage.setScene(accountScene);
         });
-        backbtn.setOnAction(a ->{
+        backbtn1.setOnAction(a ->{
             primaryStage.setScene(userScene);                      //returns user from accounts to main screen
+        });
+        backbtn2.setOnAction(a ->{
+            primaryStage.setScene(userScene);                      //returns user from accounts to main screen (it seems using same button twice disables it from the first part
         });
         logoutbtn.setOnAction(a -> {                                //logs user out back to the loginscreen
             primaryStage.setScene(loginScreen);
             displayacc.setText("");                                 // clears displaywindow after logout
+            loggeduser = null;
+            loginLabel.setText("Logged out");                                 //Notifies of logout
         });
         displaybtn.setOnAction(a ->{
             displayacc.setText(loggeduser.getData());               //displays userdata on request from display button
@@ -230,35 +255,30 @@ public class SilkSpinnerUI extends Application {
         
         
         //creates general user screen
-        HBox userss = new HBox(10);
+        HBox userss = new HBox(20);
         userscreen.getChildren().addAll(userss, menuEntries, logoutbtn, accountbtn, settingsbtn); 
         userScene = new Scene(userscreen, 600, 400);
         
         //creates accounts screen, which currently consists out of textbox that enters data, and a label that displays entered data
         HBox accountss = new HBox(20);
         TextField dataentry = new TextField();
-        accountScreen.getChildren().addAll(accountss, dataentry, displayacc, enterbtn, displaybtn, backbtn);      //connects HBox and text field for data entry
+        accountScreen.getChildren().addAll(accountss, dataentry, displayacc, enterbtn, displaybtn, backbtn1);      //connects HBox and text field for data entry
         enterbtn.setOnAction(a ->{                                          //functionalizes data entry button
             loggeduser.setData(dataentry.getText());
             dataentry.setText("");                                          // clears account data entry text panel after data entry
         });
-        
+        accountScene = new Scene(accountScreen, 600, 400);
         
         //creates settings screen
         HBox settingss = new HBox(10);
         TextField safe = new TextField();
-        settingScreen.getChildren().addAll(settingss, menuEntries, safe, backbtn, safebtn);
+        settingScreen.getChildren().addAll(settingss, safe, safebtn, backbtn2, removebtn);// puts things into the VBox
         
         safebtn.setOnAction(a -> {                                  // functionalizes safeword entry button
             loggeduser.setSafeword(safe.getText());
-            System.out.println(loggeduser.getSafeword());
         });
-        settingScene = new Scene(settingScreen, 600, 400);
+        settingScene = new Scene(settingScreen, 600, 400);              //puts VBox into the display (600x400)
         
-//        
-//        
-//        accountScreen.getChildren().addAll(accountss,enterbtn, displaybtn, backbtn);
-        accountScene = new Scene(accountScreen, 600, 400);
 
 
 
@@ -274,7 +294,7 @@ public class SilkSpinnerUI extends Application {
         
         
         //creates the screen user sees
-        primaryStage.setTitle("Silk");
+        primaryStage.setTitle("Silk Spinner, spinning your silk");
         primaryStage.setScene(loginScreen);
         primaryStage.show();
         

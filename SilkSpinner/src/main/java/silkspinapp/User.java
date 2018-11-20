@@ -15,7 +15,7 @@ public class User {
     //User has their data, username, safeword, password and a login status
     String username;
     String data;
-    String safeword;
+    String safeword = "onlysuperadmingodknowthispasswordimthebesthahahahahahahaa4329832576";//generates a standard safeword for admin that nobody else should know, or be able to crack
     String password;
     int status;
 
