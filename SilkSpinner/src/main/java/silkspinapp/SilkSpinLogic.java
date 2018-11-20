@@ -8,9 +8,9 @@ package silkspinapp;
 /**
  *
  * @author tvierine
- * 
+ *
  * The purpose of this class is to define how the software functions
  */
 public class SilkSpinLogic {
-    
+
 }

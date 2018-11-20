@@ -1,0 +1,61 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import silkspinapp.User;
+import silkspinapp.RegisteredUsers;
+
+/**
+ *
+ * @author tvierine
+ */
+public class RegisteredUsersTest {
+
+    public User test;
+    public RegisteredUsers ru;
+
+    @Before
+    public void setUp() {                       //initializes tests
+        test = new User("antti", "kala");
+        ru = new RegisteredUsers();
+        ru.listUser(test);                      //user added to list
+    }
+
+    @Test
+    public void userCanBeListed() {              //if user can be added into registry, test passes
+        ru.listUser(test);
+        assertTrue(ru.freeUser(test.getUsername()));
+    }
+
+    @Test
+    public void multipleUsernamesNotAllowed() {  //tests that multiple users cannot register with same username
+        assertEquals(ru.listUser(test), "user is already listed");
+    }
+
+    @Test
+    public void userCanBeCalledFromMapByUsername() {
+        assertEquals(ru.getUser(test.getUsername()), test);     //calls user "test" from the list and compares it to the user test
+    }
+    @Test public void userCanBeRemovedFromMapByUsername(){
+       ru.removeUser(test.getUsername());
+       assertFalse(ru.freeUser(test.getUsername()));
+    }
+
+    @After
+    public void tearDown() {
+    }
+
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    // @Test
+    // public void hello() {}
+}
