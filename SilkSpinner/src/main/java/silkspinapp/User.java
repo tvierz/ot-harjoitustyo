@@ -5,18 +5,21 @@
  */
 package silkspinapp;
 
+import java.io.*;
+import java.util.HashMap;
+
 /**
  *
  * @author tvierine
  *
  * This class defines the user of the program
  */
-public class User {
+public class User implements Serializable {
 
-    //User has their data, username, safeword, password and a login status
-    String username;
-    String data = "Data starts:";
-    String safeword = "onlysuperadmingodknowthispasswordimthebesthahahahahahahaa4329832576";//generates a standard safeword for admin that nobody else should know, or be able to crack
+    private //User has their data, username, safeword, password and a login status
+            String username;
+    HashMap<Integer, String> data;
+    String safeword = "onlysuperadmingodknowthispasswordimthebesthahahahahahahaa4329832576"; //generates a standard safeword for admin that nobody else should know, or be able to crack
     String password;
     int status;
 
@@ -25,19 +28,14 @@ public class User {
         //when new user is created, software asks for username and a password
         this.username = username;
         this.password = password;
+        data = new HashMap<>();
+        data.put(1, "Data starts:");                //adds first account specified by integer, account contains data in form of string
+        status = 1;
     }
 
     public void setSafeword(String safeword) {
         //sets safeword for user
         this.safeword = safeword;
-    }
-
-    public boolean status() {
-        Boolean logstat = false;
-        if (this.status == 1) {
-            logstat = true;
-        }
-        return logstat;         //returns false if user status is 0, true if user status is 1.
     }
 
     //methods to get userdata
@@ -54,21 +52,28 @@ public class User {
     }
 
     public String getData() {
-        return this.data;
+        return data.get(status);
     }
 
     public void setData(String s) {      // appends data to user's file
-
-        data = data + " " + s;
-
+        String current = data.get(status);               //gets data on currently used account
+        current = current + " " + s;                   //appends given data to the String
+        data.put(status, current);                       //puts the appended data on the account
     }
 
-    public void logIn() {
-        this.status = 1;        //sets status to 1 when logged in
+    public void changeAccount(Integer i) {
+        this.status = i;
     }
 
-    public void logOut() {
-        this.status = 0;        //sets status to 0 when logging out
+    public void createaccount() {
+        data.put(data.size() + 1, "Data starts:");   //creates new account with number that is 1 greater than current account amount total
     }
 
+    public int getStatus() {
+        return this.status;
+    }
+
+    public String toString() {
+        return "s";
+    }
 }
