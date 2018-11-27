@@ -28,3 +28,5 @@ Nämä metodit ovat:
 void write()
 
 void read()
+
+
