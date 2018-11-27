@@ -6,6 +6,8 @@
 
 [Työaikakirjanpito](https://github.com/tvierz/ot-harjoitustyo/blob/master/dokumentointi/Ty%C3%B6aikakirjanpito)
 
+[Arkkitehtuuri](https://github.com/tvierz/ot-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
+
 
 ##### Sovellus
-[viikko 3 release](https://github.com/tvierz/ot-harjoitustyo/tree/master/SilkSpinner)
+[viikko 4 release](https://github.com/tvierz/ot-harjoitustyo/tree/master/SilkSpinner)
