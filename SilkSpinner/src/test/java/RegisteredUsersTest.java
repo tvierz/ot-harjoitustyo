@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.*;
+import java.text.*;
 import silkspinapp.User;
 import silkspinapp.RegisteredUsers;
 
@@ -33,6 +35,12 @@ public class RegisteredUsersTest {
     @Test
     public void userLogsInRight() {
         assertEquals(ru.login("antti", "kala"), test);
+    }
+
+    @Test
+    public void userCanLogWithSafeword() {
+        test.setSafeword("nnii");
+        assertEquals(ru.login("antti", "nnii"), test);
     }
 
     @Test
@@ -78,6 +86,16 @@ public class RegisteredUsersTest {
         ru.getListMap().clear();
         assertEquals(ru.getUser("antti"), null);
     }
+    @Test
+    public void enterDataRequiresParseableIntoDoubleAsSecondValue(){
+        assertEquals(ru.enterData(test, test.getStatus(), "j, 1, n"), "Data has been entered");
+        
+    }
+    @Test
+    public void enterDataRejectsNonDoubleParseableValue(){
+        assertEquals(ru.enterData(test, test.getStatus(), "j, EITOIMI, n"), "Please make sure your entry is in format: 'comment, amount, type'");
+        
+    }
 
     @Test
     public void multipleUsernamesNotAllowed() {  //tests that multiple users cannot register with same username
@@ -90,7 +108,7 @@ public class RegisteredUsersTest {
         ru.getUser(test.getUsername()).createaccount();
         ru.getUser(test.getUsername()).changeAccount(2);
         ru.enterData(test, 2, "n");
-        assertEquals(test.getData(), "Data starts: n");
+        assertEquals(test.getData(), "You spun this silk: ");
     }
 
     @Test

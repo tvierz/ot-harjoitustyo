@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import silkspinapp.DataSpec;
 import silkspinapp.User;
 
 /**
@@ -19,6 +22,9 @@ import silkspinapp.User;
 public class UserTest {
 
     User u;
+    DataSpec use;           // null entry on the data list
+    int month;
+    GregorianCalendar date = new GregorianCalendar();
 
     @Before
     public void setUp() {
@@ -37,20 +43,39 @@ public class UserTest {
 
     @Test
     public void userHasNoDataAtStart() {
-        assertEquals(u.getData(), "Data starts:");
+        assertEquals(u.getData(), "You spun this silk: ");
+    }
+
+    @Test
+    public void hashMapReturnedRight() {
+        HashMap<Integer, DataSpec> n = new HashMap<>();
+        u.setData("k, 2, n");
+        n = u.getdataEntries();
+        assertEquals(n.get(1).toString(), "04.12.2018: k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+
     }
 
     @Test
     public void userHasDataWhenAdded() {
-        u.setData("u");
-        assertEquals(u.getData(), "Data starts: u");
+        u.setData("k, 2, n");
+        assertEquals(u.getData(), "You spun this silk: \n"
+                + "04.12.2018: k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+    }
+
+    @Test
+    public void userDataNullsWhenAccountDoesnotExist() {
+        u.changeAccount(2);
+        assertEquals(u.getdataEntries(), null);
     }
 
     @Test
     public void userDataAppendsCorrectly() {
-        u.setData("u");
-        u.setData("u");
-        assertEquals(u.getData(), "Data starts: u u");
+
+        u.setData("o, 5, l");
+        u.setData("k, 2, n");
+        assertEquals(u.getData(), "You spun this silk: \n"
+                + "04.12.2018: o AMOUNT: 5.0 TYPE OF EXPENSE: l\n"
+                + "04.12.2018: k AMOUNT: 2.0 TYPE OF EXPENSE: n");
     }
 
     @Test
@@ -85,8 +110,9 @@ public class UserTest {
     public void setDataOnAccountRight() {
         u.createaccount();
         u.changeAccount(2);
-        u.setData("k");
-        assertEquals(u.getData(), "Data starts: k");
+        u.setData("k, 2, n");
+        assertEquals(u.getData(), "You spun this silk: \n"
+                + "04.12.2018: k AMOUNT: 2.0 TYPE OF EXPENSE: n");
 
     }
 
@@ -95,9 +121,24 @@ public class UserTest {
 
         u.createaccount();
         u.changeAccount(2);
-        u.setData("k");
+        u.setData("k, 2, n");
         u.changeAccount(1);
-        assertEquals(u.getData(), "Data starts:");
+        u.setData("o, 5, l");
+        assertEquals(u.getData(), "You spun this silk: \n"
+                + "04.12.2018: o AMOUNT: 5.0 TYPE OF EXPENSE: l");
+    }
+
+    @Test
+    public void monthlyTotalIsRight() {
+        u.setData("k, 2.0, y");
+        u.setData("n, 5.0, t");
+        String test = u.monthlyTotal() + "";
+        assertEquals(test, "7.0");
+    }
+
+    @Test
+    public void monthlyTotalIsZeroAtStart() {
+        assertEquals(u.monthlyTotal() + "", 0, 0);
     }
 
     @After

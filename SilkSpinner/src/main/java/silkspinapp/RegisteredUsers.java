@@ -8,6 +8,11 @@ package silkspinapp;
 import java.util.HashMap;
 import silkspinapp.User;
 import java.io.*;
+import java.util.Date;
+
+import java.text.*;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -21,14 +26,28 @@ public class RegisteredUsers implements Serializable {
 
     HashMap<String, User> userlist;
     SilkSpinLogic spin = new SilkSpinLogic();
+    public Date now;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");      //determines the displayed date
+    String returnval;
 //    = new HashMap<>();
 
     public RegisteredUsers() {
         userlist = new HashMap();
+        now = new Date();               //fetches current date upon being constructed
+        returnval = sdf.format(now);
     }
+//
+//    public double fetchDateData(User u, int month) { //gets specified user, and uses given month to sum all entries of given month
+//        return userlist.get(u).monthlyTotal(month);           //gets user's data from specified date
+//    }
 
     public void initialize() {
         userlist = spin.read();                // reads savefile into the userlist
+    }
+
+    public String showDate() {               //formats the date to display DD.MM.YYYY
+
+        return returnval;                                //returns the formatted date
     }
 
     public void save() {             // saves current data on registeredusers to the local file
@@ -91,9 +110,33 @@ public class RegisteredUsers implements Serializable {
         return msg;
     }
 
-    public void enterData(User u, Integer accountno, String data) {
-        u.changeAccount(accountno);             //changes the user's account status to specified value
-        u.setData(data);                        // writes data to account that is the user's status at the moment
+    public String enterData(User u, Integer accountno, String data) {
+        String[] dubs = data.split(", ");
+        if (dubs.length > 1) {
+            Scanner doubles = new Scanner(dubs[1]);
+            if (doubles.hasNextDouble() == true) {
+                u.changeAccount(accountno);             //changes the user's account status to specified value
+                u.setData(data);                        // writes data to account that is the user's status at the moment
+                return "Data has been entered";
+            } else {
+                return "Please make sure your entry is in format: 'comment, amount, type'";
+            }
+        } else {
+            return "Please make sure your entry is in format: 'comment, amount, type'"; //if the entered value doesn't have a double, it's false    
+        }
+//        System.out.println(data);
+//        String[] confirmdouble = data.split(", ");           //splits entered data by ", "
+//        System.out.println(confirmdouble.toString());
+//        try{                //if 2nd entered value is double, and proceeds to saving data if it is
+//        Double x = Double.parseDouble(confirmdouble[1]);
+//        u.changeAccount(accountno);             //changes the user's account status to specified value
+//        u.setData(data);                        // writes data to account that is the user's status at the moment
+//        return "Data has been entered";                  
+//        }catch(Exception e){
+//            System.out.println(e);
+//            System.out.println(data);
+//            return "Please make sure your entry is in format: 'comment, amount, type'";
+//        }
     }
 
     public User getUser(String u) {

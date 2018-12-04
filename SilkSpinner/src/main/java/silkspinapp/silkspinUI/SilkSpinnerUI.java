@@ -36,6 +36,8 @@ import javafx.stage.Stage;
 import silkspinapp.User;
 import silkspinapp.RegisteredUsers;
 import silkspinapp.SilkSpinLogic;
+import java.util.*;
+import java.text.*;
 
 /**
  *
@@ -53,7 +55,8 @@ public class SilkSpinnerUI extends Application {
     private User loggeduser;
     private File f;
 
-    private final Label menuEntries = new Label();
+    private Label menuEntries = new Label();
+    
 
     public void startup() throws Exception {
         Properties input = new Properties();
@@ -87,7 +90,7 @@ public class SilkSpinnerUI extends Application {
         passInput.getChildren().addAll(passLabel, insertPass);
 
         //create loginbutton in the screen
-        Label loginLabel = new Label();// label describing actions in loginscreen
+        Label loginLabel = new Label("Today's date is: " + ru.showDate());// label describing actions in loginscreen
         Label creation = new Label();//label describing actions in registration screen
 
         Button loginbtn = new Button("Login");
@@ -103,7 +106,7 @@ public class SilkSpinnerUI extends Application {
                 insertUser.setText("");//cleans account and password boxes so they are clear on logout
                 insertPass.setText("");
                 loginLabel.setText("Entering");
-                menuEntries.setText(usersname + " you have logged in"); //tells user they have logged in
+                menuEntries.setText(usersname + " you have logged in on your account number: " + loggeduser.getStatus()); //tells user they have logged in
                 primaryStage.setScene(userScene);                       // swaps to loginscreen of the user
             }
         });
@@ -169,6 +172,7 @@ public class SilkSpinnerUI extends Application {
         Button safebtn = new Button("Confirm safeword");
         Button removebtn = new Button("Permanently remove your account and all data on it");
         Button newaccount = new Button("Create new account"); // button for new account
+        Button monthlytotalbtn = new Button("Get this month's total spendings");
         Label displayacc = new Label();
 
         //creates new account functionality
@@ -182,8 +186,17 @@ public class SilkSpinnerUI extends Application {
             loggeduser.createaccount();         //creates account for currently logged user
 
         });
+        monthlytotalbtn.setOnAction(a ->{
+//            System.out.println(loggeduser.a());
+            String n = "This month's total spendings: " + loggeduser.monthlyTotal();
+            menuEntries.setText(n);
+            
+        });
         selectaccountbtn.setOnAction(a -> {
+
             loggeduser.changeAccount(Integer.parseInt(selectaccount.getText()));
+            menuEntries.setText("");            //clears all labels from accountscreen
+            displayacc.setText("");             //
 
         });
 
@@ -232,15 +245,16 @@ public class SilkSpinnerUI extends Application {
         VBox settingScreen = new VBox(20);
         //creates general user screen
         HBox userss = new HBox(20);
-        userscreen.getChildren().addAll(userss, selectaccount, selectaccountbtn, menuEntries, logoutbtn, accountbtn, settingsbtn);
+        userscreen.getChildren().addAll(userss,menuEntries, selectaccount, selectaccountbtn, logoutbtn, accountbtn, settingsbtn);
         userScene = new Scene(userscreen, 600, 400);
 
         //creates accounts screen, which currently consists out of textbox that enters data, and a label that displays entered data
         HBox accountss = new HBox(20);
         TextField dataentry = new TextField();
-        accountScreen.getChildren().addAll(accountss, dataentry, displayacc, enterbtn, displaybtn, backbtn1);      //connects HBox and text field for data entry
+        accountScreen.getChildren().addAll(accountss, menuEntries, dataentry, displayacc, enterbtn, displaybtn, backbtn1, monthlytotalbtn);      //connects HBox and text field for data entry
         enterbtn.setOnAction(a -> {                                          //functionalizes data entry button
-            ru.enterData(loggeduser, loggeduser.getStatus(), dataentry.getText());       //saves entered data to user's currently specified account
+            menuEntries.setText(ru.enterData(loggeduser, loggeduser.getStatus(), dataentry.getText()));       //saves entered data to user's currently specified account and gives message describing entry event
+            
             ru.save();
             dataentry.setText("");
 
