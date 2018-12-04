@@ -10,4 +10,4 @@
 
 
 ##### Sovellus
-[viikko 4 release](https://github.com/tvierz/ot-harjoitustyo/tree/master/SilkSpinner)
+[viikko 5 release](https://github.com/tvierz/ot-harjoitustyo/releases/tag/v0.02.0-alpha)
