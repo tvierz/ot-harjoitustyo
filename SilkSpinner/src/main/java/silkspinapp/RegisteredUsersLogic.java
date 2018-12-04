@@ -77,12 +77,12 @@ public class RegisteredUsersLogic implements Serializable {
                 logged = userlist.get(user);                  // sets the returned user to be the one that logged in
 
             } else {
-                logged = null;
+                logged = logged;
                 //does nothing is login is wrong
             }
             //___________________________password check end________________________________________________
         } else {
-            logged = null;
+            logged = logged;
             //does nothing if username is wrong
 
         }
