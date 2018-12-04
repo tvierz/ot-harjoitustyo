@@ -22,16 +22,16 @@ import java.util.Scanner;
  *
  * @author tvierine
  */
-public class RegisteredUsers implements Serializable {
+public class RegisteredUsersLogic implements Serializable {
 
     HashMap<String, User> userlist;
-    SilkSpinLogic spin = new SilkSpinLogic();
+    SilkSpinDataSaving spin = new SilkSpinDataSaving();
     public Date now;
     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");      //determines the displayed date
     String returnval;
 //    = new HashMap<>();
 
-    public RegisteredUsers() {
+    public RegisteredUsersLogic() {
         userlist = new HashMap();
         now = new Date();               //fetches current date upon being constructed
         returnval = sdf.format(now);
@@ -77,10 +77,12 @@ public class RegisteredUsers implements Serializable {
                 logged = userlist.get(user);                  // sets the returned user to be the one that logged in
 
             } else {
+                logged = null;
                 //does nothing is login is wrong
             }
             //___________________________password check end________________________________________________
         } else {
+            logged = null;
             //does nothing if username is wrong
 
         }

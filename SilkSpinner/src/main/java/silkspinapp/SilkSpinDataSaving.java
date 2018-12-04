@@ -16,7 +16,7 @@ import silkspinapp.User;
  *
  * The purpose of this class is to define how the software functions
  */
-public class SilkSpinLogic {
+public class SilkSpinDataSaving {
 
     public void write(HashMap<String, User> hm) {                //saves contents of given hashmap in a local file
         try {

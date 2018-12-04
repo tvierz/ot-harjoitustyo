@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 import java.util.*;
 import java.text.*;
 import silkspinapp.User;
-import silkspinapp.RegisteredUsers;
+import silkspinapp.RegisteredUsersLogic;
 
 /**
  *
@@ -22,12 +22,12 @@ import silkspinapp.RegisteredUsers;
 public class RegisteredUsersTest {
 
     public User test;
-    public RegisteredUsers ru;
+    public RegisteredUsersLogic ru;
 
     @Before
     public void setUp() {                       //initializes tests
         test = new User("antti", "kala");
-        ru = new RegisteredUsers();
+        ru = new RegisteredUsersLogic();
         ru.listUser(test);                      //user added to list
         ru.listUser(new User("no", "no"));
     }

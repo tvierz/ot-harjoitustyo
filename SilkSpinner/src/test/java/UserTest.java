@@ -135,6 +135,13 @@ public class UserTest {
         String test = u.monthlyTotal() + "";
         assertEquals(test, "7.0");
     }
+    @Test
+    public void monthlyTotalIsWrong() {
+        u.setData("k, 2.0, y");
+        u.setData("n, 5.0, t");
+        String test = u.monthlyTotal() + "";
+        assertEquals(test, "7.0");
+    }
 
     @Test
     public void monthlyTotalIsZeroAtStart() {

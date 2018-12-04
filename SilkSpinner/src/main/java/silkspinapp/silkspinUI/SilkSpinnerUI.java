@@ -34,8 +34,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import silkspinapp.User;
-import silkspinapp.RegisteredUsers;
-import silkspinapp.SilkSpinLogic;
+import silkspinapp.RegisteredUsersLogic;
+import silkspinapp.SilkSpinDataSaving;
 import java.util.*;
 import java.text.*;
 
@@ -51,12 +51,11 @@ public class SilkSpinnerUI extends Application {
     private Scene userScene;
     private Scene accountScene;
     private Scene settingScene;
-    private final RegisteredUsers ru = new RegisteredUsers();
+    private final RegisteredUsersLogic ru = new RegisteredUsersLogic();
     private User loggeduser;
     private File f;
 
     private Label menuEntries = new Label();
-    
 
     public void startup() throws Exception {
         Properties input = new Properties();
@@ -186,11 +185,11 @@ public class SilkSpinnerUI extends Application {
             loggeduser.createaccount();         //creates account for currently logged user
 
         });
-        monthlytotalbtn.setOnAction(a ->{
+        monthlytotalbtn.setOnAction(a -> {
 //            System.out.println(loggeduser.a());
             String n = "This month's total spendings: " + loggeduser.monthlyTotal();
             menuEntries.setText(n);
-            
+
         });
         selectaccountbtn.setOnAction(a -> {
 
@@ -245,7 +244,7 @@ public class SilkSpinnerUI extends Application {
         VBox settingScreen = new VBox(20);
         //creates general user screen
         HBox userss = new HBox(20);
-        userscreen.getChildren().addAll(userss,menuEntries, selectaccount, selectaccountbtn, logoutbtn, accountbtn, settingsbtn);
+        userscreen.getChildren().addAll(userss, menuEntries, selectaccount, selectaccountbtn, logoutbtn, accountbtn, settingsbtn);
         userScene = new Scene(userscreen, 600, 400);
 
         //creates accounts screen, which currently consists out of textbox that enters data, and a label that displays entered data
@@ -254,7 +253,7 @@ public class SilkSpinnerUI extends Application {
         accountScreen.getChildren().addAll(accountss, menuEntries, dataentry, displayacc, enterbtn, displaybtn, backbtn1, monthlytotalbtn);      //connects HBox and text field for data entry
         enterbtn.setOnAction(a -> {                                          //functionalizes data entry button
             menuEntries.setText(ru.enterData(loggeduser, loggeduser.getStatus(), dataentry.getText()));       //saves entered data to user's currently specified account and gives message describing entry event
-            
+
             ru.save();
             dataentry.setText("");
 
