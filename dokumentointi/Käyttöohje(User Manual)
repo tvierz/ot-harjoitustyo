@@ -1,0 +1,31 @@
+#### Käyttöohje
+
+Ohjelmaa käytetään suorittamalla sitä komentolinjan komennolla java -jar SilkSpinner-1.1-SNAPSHOT.jar
+
+Kun ohjelma on käynnistetty, se avautuu graafiseksi näkymäksi joka pyytää käyttäjätunnusta ja salasanaa.
+Ohjelman käyttämiseksi käyttäjällä pitää olla käyttäjätunnus, joka voidaan luoda siirtymällä rekisteröinti-ikkunaan kirjautumisnäkymän napista.
+Kun käyttäjällä on käyttäjätunnus, sillä voidaan kirjautua sisään itse ohjelmaan.
+
+Sisäänkirjautumisen yhteydessä päädytään sovelluksen päänäkymään, josta voidaan siirtyä asetuksiin, budjettisivulle, tilisivulle, sekä vaihtaa
+aktiivista tiliä ja kirjautua ulos liittymässä näkyvien nappien avulla. Aktiivisen tilin voi vaihtaa kirjoittamalla tilin numero tekstikenttään ja painamalla nappia, jos tiliä ei ole, 
+
+Asetusnäkymässä käyttäjä voi asettaa oman suojasanan joka toimii myös salasanana, luoda uuden tilin, sekä poistaa oman käyttäjätunnuksensa kaikkine tietoineen.
+Suojasanan asettamiseksi, näkymän kirjoituslaatikkoon pitää asettaa uusi suojasana ja vahvistaa se napin avulla.
+Asetusnäkymän kaikki toiminnot toimivat nappien avulla, ja siitä voidaan palata takaisin päänäkymään käyttäen paluunappia.
+
+Budjettisivulla käyttäjä voi antaa ohjelmalle tietoja muodossa "kommentti, luku, tyyppi" jotka kuvaavat yksittäisiä budjettitapahtumia, jos
+tapahtumalle ei haluta antaa kommenttia tai tyyppiä, voidaan ne korvata esimerkiksi kirjoittamalla niiden paikalle "-".
+Kun käyttäjä on syöttänyt tapahtuman sovellukselle, painetaan nappia, jolloin sovellus tallentaa syötteen ja tulostaa ikkunan yläkulmaan kaikki 
+suunnitellut tapahtumat ja lopuksi kokonaissumman syötettyjen tapahtumien lukujen perusteella.
+Kuluvan kuukauden budjettia voidaan verrata aktiiviselle tilille kirjattuihin menoihin, jolloin tiedetään tarkalleen paljonko suunnitellusta budjetista on käytetty, 
+tämä tuloste on negatiivinen jos suunniteltu budjetti on ylitetty.
+Budjettisivulta poistuminen tapahtuu paluunapin avulla, jolloin päästään takaisin päänäkymään.
+
+Tilisivulla kerrotaan käyttäjän aktiivisen tilin numero, tai kerrotaan jos haluttua tiliä ei ole olemassa
+Sivun tekstilaatikkoon voidaan syöttää tapahtumat samassa muodossa kuin budjettisivulle, ja ne voidaan tallentaa aktiiviselle tilille nappia painamalla.
+Eri tilien tiedot eivät sekoitu keskenään.
+Aktiivisen tilin kaikki tapahtumat voidaan kutsua sivulla olevasta napista.
+Aktiivisen tilin kaikkien tapahtumien summa voidaan kutsua nappia painamalla.
+Tilinäkymästä voidaan palata takaisin päänäkymään paluunapilla.
+
+Kaikki napit on nimetty niiden toimintaa kuvaavilla nimillä.
