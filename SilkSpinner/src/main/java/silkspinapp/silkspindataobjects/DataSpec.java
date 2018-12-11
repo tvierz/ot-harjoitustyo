@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package silkspinapp;
+package silkspinapp.silkspindataobjects;
 
 import java.io.*;
 import static java.lang.Integer.parseInt;

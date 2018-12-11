@@ -33,11 +33,12 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import silkspinapp.User;
-import silkspinapp.RegisteredUsersLogic;
-import silkspinapp.SilkSpinDataSaving;
+import silkspinapp.silkspindataobjects.User;
+import silkspinapp.logicandoperations.RegisteredUsersLogic;
+import silkspinapp.logicandoperations.SilkSpinDataSaving;
 import java.util.*;
 import java.text.*;
+import silkspinapp.logicandoperations.BudgetLogic;
 
 /**
  *
@@ -54,6 +55,8 @@ public class SilkSpinnerUI extends Application {
     private final RegisteredUsersLogic ru = new RegisteredUsersLogic();
     private User loggeduser;
     private File f;
+    private BudgetLogic bl = new BudgetLogic();
+    private Scene budgetScene;
 
     private Label menuEntries = new Label();
 
@@ -107,6 +110,7 @@ public class SilkSpinnerUI extends Application {
                 loginLabel.setText("Entering");
                 menuEntries.setText(usersname + " you have logged in on your account number: " + loggeduser.getStatus()); //tells user they have logged in
                 primaryStage.setScene(userScene);                       // swaps to loginscreen of the user
+
             }
         });
 
@@ -136,7 +140,7 @@ public class SilkSpinnerUI extends Application {
         Button registbtn = new Button("Register");
         Button returnbtn = new Button("Return to login");
 
-        returnbtn.setOnAction(a -> {                //returns back to login screen
+        returnbtn.setOnAction(a -> {                //returns back to login screen and resets labels
             loginLabel.setText("");
             newusenter.setText("");
             newuspass.setText("");
@@ -172,6 +176,7 @@ public class SilkSpinnerUI extends Application {
         Button removebtn = new Button("Permanently remove your account and all data on it");
         Button newaccount = new Button("Create new account"); // button for new account
         Button monthlytotalbtn = new Button("Get this month's total spendings");
+        Button budgetpagebtn = new Button("Enter budget page");
         Label displayacc = new Label();
 
         //creates new account functionality
@@ -181,9 +186,11 @@ public class SilkSpinnerUI extends Application {
         Button selectaccountbtn = new Button("Select account");
         Button createaccountbtn = new Button("Create new account");
 
+        budgetpagebtn.setOnAction(a -> {
+            primaryStage.setScene(budgetScene); //hops to budget screen
+        });
         createaccountbtn.setOnAction(a -> {
             loggeduser.createaccount();         //creates account for currently logged user
-
         });
         monthlytotalbtn.setOnAction(a -> {
 //            System.out.println(loggeduser.a());
@@ -192,20 +199,14 @@ public class SilkSpinnerUI extends Application {
 
         });
         selectaccountbtn.setOnAction(a -> {
-
-            loggeduser.changeAccount(Integer.parseInt(selectaccount.getText()));
-            menuEntries.setText("");            //clears all labels from accountscreen
+            menuEntries.setText(loggeduser.changeAccount(selectaccount.getText()));           //clears all labels from accountscreen
             displayacc.setText("");             //
-
         });
 
         settingsbtn.setOnAction(a -> {                                //gives functionality to the buttons in userscreen
             menuEntries.setText("Set your safeword and press confirm to link it to your account");
             primaryStage.setScene(settingScene);
         });
-//        newaccount.setOnAction(a ->{
-//            oggeduser.
-//        });
         removebtn.setOnAction(a -> {
             primaryStage.setScene(loginScreen);                 //logs user out and removes their account
             ru.removeUser(loggeduser.getUsername());
@@ -218,11 +219,12 @@ public class SilkSpinnerUI extends Application {
             primaryStage.setScene(accountScene);
         });
         backbtn1.setOnAction(a -> {
+            menuEntries.setText("Select your account here");
             primaryStage.setScene(userScene);                      //returns user from accounts to main screen
-//            spin.dump(ru.getListMap());                // dumps given list into a file for local storage// clears account data entry text panel after data entry
-//        
+
         });
         backbtn2.setOnAction(a -> {
+            menuEntries.setText("Select your account here");
             primaryStage.setScene(userScene);                      //returns user from accounts to main screen (it seems using same button twice disables it from the first part
         });
         logoutbtn.setOnAction(a -> {                                //logs user out back to the loginscreen
@@ -242,9 +244,10 @@ public class SilkSpinnerUI extends Application {
         VBox userscreen = new VBox(20);
         VBox accountScreen = new VBox(20);
         VBox settingScreen = new VBox(20);
+        VBox budgetScreen = new VBox(20);
         //creates general user screen
         HBox userss = new HBox(20);
-        userscreen.getChildren().addAll(userss, menuEntries, selectaccount, selectaccountbtn, logoutbtn, accountbtn, settingsbtn);
+        userscreen.getChildren().addAll(userss, menuEntries, selectaccount, selectaccountbtn, logoutbtn, accountbtn, settingsbtn, budgetpagebtn);
         userScene = new Scene(userscreen, 600, 400);
 
         //creates accounts screen, which currently consists out of textbox that enters data, and a label that displays entered data
@@ -252,8 +255,7 @@ public class SilkSpinnerUI extends Application {
         TextField dataentry = new TextField();
         accountScreen.getChildren().addAll(accountss, menuEntries, dataentry, displayacc, enterbtn, displaybtn, backbtn1, monthlytotalbtn);      //connects HBox and text field for data entry
         enterbtn.setOnAction(a -> {                                          //functionalizes data entry button
-            menuEntries.setText(ru.enterData(loggeduser, loggeduser.getStatus(), dataentry.getText()));       //saves entered data to user's currently specified account and gives message describing entry event
-
+            menuEntries.setText(ru.enterData(loggeduser, dataentry.getText()));       //saves entered data to user's currently specified account and gives message describing entry event
             ru.save();
             dataentry.setText("");
 
@@ -272,7 +274,29 @@ public class SilkSpinnerUI extends Application {
         });
         settingScene = new Scene(settingScreen, 600, 400);              //puts VBox into the display (600x400)
 
-        //________LOGGED IN SCREENS END___________________________________________________
+        //budget Manibulation screen
+        HBox budgetplannerHB = new HBox(10);
+        TextField budgetdataentry = new TextField();
+        Label budgetlisted = new Label();
+        Label entryopsbudget = new Label("Not empty");
+        Button enterbudgetbtn = new Button("Enter item on your budget plan");
+        Button comparetousedbtn = new Button("Compare your monthly spendings to your budget");
+        Button backbtn3 = new Button("Return to user screen");      //yet another back button since they stop working somewhere if you put them on multiple VBoxes
+        budgetScreen.getChildren().addAll(budgetplannerHB, budgetlisted, entryopsbudget, enterbudgetbtn, budgetdataentry, comparetousedbtn, backbtn3);
+        budgetScene = new Scene(budgetScreen, 600, 400);
+        enterbudgetbtn.setOnAction(a -> {
+            entryopsbudget.setText(bl.enterData(loggeduser, budgetdataentry.getText())); //tells how the operation of adding to budget went
+
+            budgetlisted.setText(bl.printBudget() + "\n Total budget for the month is:" + bl.returntotalbudget(loggeduser));       //refreshes the budgetplan with every entry, so User can see their plan
+            budgetdataentry.setText("");    //cleans the text field after data entry
+        });
+        comparetousedbtn.setOnAction(a -> {     //sets the banner to tell user how much of their budget they have used
+            budgetlisted.setText(bl.compareToUsersSpending(loggeduser));
+        });
+        backbtn3.setOnAction(a -> {
+            primaryStage.setScene(userScene);
+        });
+//________LOGGED IN SCREENS END___________________________________________________
         //creates the screen user sees
         primaryStage.setTitle("Silk Spinner, spinning your silk");
         primaryStage.setScene(loginScreen);
@@ -283,7 +307,7 @@ public class SilkSpinnerUI extends Application {
     @Override
     public void stop() {
         //closes the app
-        ru.save();//saves data in case user decides to close the app instead of loggin out
+        ru.save(); //saves data in case user decides to close the app instead of logging out
         System.out.println("Ending the app, and your finances");
 
     }

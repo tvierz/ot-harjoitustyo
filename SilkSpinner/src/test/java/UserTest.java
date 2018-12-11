@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import org.junit.After;
@@ -12,8 +14,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import silkspinapp.DataSpec;
-import silkspinapp.User;
+import silkspinapp.silkspindataobjects.DataSpec;
+import silkspinapp.silkspindataobjects.User;
 
 /**
  *
@@ -24,11 +26,15 @@ public class UserTest {
     User u;
     DataSpec use;           // null entry on the data list
     int month;
-    GregorianCalendar date = new GregorianCalendar();
+    Date now;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");      //determines the displayed date
+    String date;
 
     @Before
     public void setUp() {
         u = new User("antti", "tuisku");
+        now = new Date();               //confirms date on creation of entry, again
+        date = sdf.format(now);
     }
 
     @Test
@@ -51,7 +57,7 @@ public class UserTest {
         HashMap<Integer, DataSpec> n = new HashMap<>();
         u.setData("k, 2, n");
         n = u.getdataEntries();
-        assertEquals(n.get(1).toString(), "04.12.2018: k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+        assertEquals(n.get(1).toString(), date +": k AMOUNT: 2.0 TYPE OF EXPENSE: n");
 
     }
 
@@ -59,12 +65,12 @@ public class UserTest {
     public void userHasDataWhenAdded() {
         u.setData("k, 2, n");
         assertEquals(u.getData(), "You spun this silk: \n"
-                + "04.12.2018: k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+                + date +": k AMOUNT: 2.0 TYPE OF EXPENSE: n");
     }
 
     @Test
     public void userDataNullsWhenAccountDoesnotExist() {
-        u.changeAccount(2);
+        u.changeAccount(2+"");
         assertEquals(u.getdataEntries(), null);
     }
 
@@ -74,8 +80,8 @@ public class UserTest {
         u.setData("o, 5, l");
         u.setData("k, 2, n");
         assertEquals(u.getData(), "You spun this silk: \n"
-                + "04.12.2018: o AMOUNT: 5.0 TYPE OF EXPENSE: l\n"
-                + "04.12.2018: k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+                + date + ": o AMOUNT: 5.0 TYPE OF EXPENSE: l\n"
+                + date + ": k AMOUNT: 2.0 TYPE OF EXPENSE: n");
     }
 
     @Test
@@ -97,7 +103,7 @@ public class UserTest {
     @Test
     public void accountsCreatedRight() {
         u.createaccount();
-        u.changeAccount(2);
+        u.changeAccount(2+"");
         assertEquals(u.getStatus(), 2);
     }
 
@@ -109,10 +115,10 @@ public class UserTest {
     @Test
     public void setDataOnAccountRight() {
         u.createaccount();
-        u.changeAccount(2);
+        u.changeAccount(2+"");
         u.setData("k, 2, n");
         assertEquals(u.getData(), "You spun this silk: \n"
-                + "04.12.2018: k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+                + date + ": k AMOUNT: 2.0 TYPE OF EXPENSE: n");
 
     }
 
@@ -120,12 +126,12 @@ public class UserTest {
     public void setDataNotContaminateOtherAccounts() {
 
         u.createaccount();
-        u.changeAccount(2);
+        u.changeAccount(2+"");
         u.setData("k, 2, n");
-        u.changeAccount(1);
+        u.changeAccount(1+"");
         u.setData("o, 5, l");
         assertEquals(u.getData(), "You spun this silk: \n"
-                + "04.12.2018: o AMOUNT: 5.0 TYPE OF EXPENSE: l");
+                + date + ": o AMOUNT: 5.0 TYPE OF EXPENSE: l");
     }
 
     @Test

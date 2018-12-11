@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package silkspinapp;
+package silkspinapp.logicandoperations;
 
 import java.util.HashMap;
-import silkspinapp.User;
+import silkspinapp.silkspindataobjects.User;
 import java.io.*;
 import java.util.Date;
 
 import java.text.*;
 import java.util.List;
 import java.util.Scanner;
+import silkspinapp.silkspindataobjects.BudgetPlan;
 
 /**
  *
@@ -59,6 +60,7 @@ public class RegisteredUsersLogic implements Serializable {
 
             String username = u.getUsername();
             userlist.put(username, u);                              //adds user and their username to the list of users
+      
             return "User registered succesfully";                   //returns statement whether or not registration succeeded or not
         } else {
             // if user is listed, do nothing
@@ -112,13 +114,12 @@ public class RegisteredUsersLogic implements Serializable {
         return msg;
     }
 
-    public String enterData(User u, Integer accountno, String data) {
+    public String enterData(User u, String data) {
         String[] dubs = data.split(", ");
-        if (dubs.length > 1) {
+        if (dubs.length == 3) {                             //entered data must split into list of length 3
             Scanner doubles = new Scanner(dubs[1]);
             if (doubles.hasNextDouble() == true) {
-                u.changeAccount(accountno);             //changes the user's account status to specified value
-                u.setData(data);                        // writes data to account that is the user's status at the moment
+                u.setData(data);             // writes data to account that is the user's status at the moment
                 return "Data has been entered";
             } else {
                 return "Please make sure your entry is in format: 'comment, amount, type'";
@@ -126,19 +127,6 @@ public class RegisteredUsersLogic implements Serializable {
         } else {
             return "Please make sure your entry is in format: 'comment, amount, type'"; //if the entered value doesn't have a double, it's false    
         }
-//        System.out.println(data);
-//        String[] confirmdouble = data.split(", ");           //splits entered data by ", "
-//        System.out.println(confirmdouble.toString());
-//        try{                //if 2nd entered value is double, and proceeds to saving data if it is
-//        Double x = Double.parseDouble(confirmdouble[1]);
-//        u.changeAccount(accountno);             //changes the user's account status to specified value
-//        u.setData(data);                        // writes data to account that is the user's status at the moment
-//        return "Data has been entered";                  
-//        }catch(Exception e){
-//            System.out.println(e);
-//            System.out.println(data);
-//            return "Please make sure your entry is in format: 'comment, amount, type'";
-//        }
     }
 
     public User getUser(String u) {

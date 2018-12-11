@@ -12,8 +12,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.*;
 import java.text.*;
-import silkspinapp.User;
-import silkspinapp.RegisteredUsersLogic;
+import silkspinapp.silkspindataobjects.User;
+import silkspinapp.logicandoperations.RegisteredUsersLogic;
 
 /**
  *
@@ -88,12 +88,12 @@ public class RegisteredUsersTest {
     }
     @Test
     public void enterDataRequiresParseableIntoDoubleAsSecondValue(){
-        assertEquals(ru.enterData(test, test.getStatus(), "j, 1, n"), "Data has been entered");
+        assertEquals(ru.enterData(test, "j, 1, n"), "Data has been entered");
         
     }
     @Test
     public void enterDataRejectsNonDoubleParseableValue(){
-        assertEquals(ru.enterData(test, test.getStatus(), "j, EITOIMI, n"), "Please make sure your entry is in format: 'comment, amount, type'");
+        assertEquals(ru.enterData(test, "j, EITOIMI, n"), "Please make sure your entry is in format: 'comment, amount, type'");
         
     }
 
@@ -104,10 +104,10 @@ public class RegisteredUsersTest {
 
     @Test
     public void dataWrittenRightOnRightAccountOfUser() {
-        ru.enterData(test, 1, "kaija");
+        ru.enterData(test, "3.0");
         ru.getUser(test.getUsername()).createaccount();
-        ru.getUser(test.getUsername()).changeAccount(2);
-        ru.enterData(test, 2, "n");
+        ru.getUser(test.getUsername()).changeAccount(2+"");
+        ru.enterData(test, "5.08");
         assertEquals(test.getData(), "You spun this silk: ");
     }
 
