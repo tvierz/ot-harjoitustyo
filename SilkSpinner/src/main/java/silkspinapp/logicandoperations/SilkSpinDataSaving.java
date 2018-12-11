@@ -14,10 +14,17 @@ import silkspinapp.silkspindataobjects.User;
  *
  * @author tvierine
  *
- * The purpose of this class is to define how the software functions
+ * This class contains methods to save and read data
  */
 public class SilkSpinDataSaving {
 
+    /**
+     * Method that is used to save active data into a Userdat.ser file
+     *
+     * @param hm HashMap<String, User> that is being saved
+     *
+     *
+     */
     public void write(HashMap<String, User> hm) {                //saves contents of given hashmap in a local file
         try {
             FileOutputStream fos
@@ -31,6 +38,14 @@ public class SilkSpinDataSaving {
         }
     }
 
+    /**
+     * Method that allows reading the Userdat.ser file and storing the data into
+     * a HashMap<>
+     *
+     *
+     *
+     * @return HashMap<String, User> containing the data from Userdat.ser file
+     */
     public HashMap<String, User> read() {
 
         HashMap<String, User> hm = new HashMap<>();

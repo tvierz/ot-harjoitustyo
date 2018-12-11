@@ -14,37 +14,78 @@ import silkspinapp.silkspindataobjects.DataSpec;
 import silkspinapp.silkspindataobjects.User;
 
 /**
- * this class determines how budget operates
+ * this class contains methods to modify and manipulate details of BudgetPlan
+ * and save it to User class
  *
  * @author tvierine
  */
-public class BudgetLogic implements Serializable{
+public class BudgetLogic implements Serializable {
 
     BudgetPlan bp;
     int month;
     GregorianCalendar date = new GregorianCalendar();
 
+    /**
+     * Empty constructor that initializes the class
+     *
+     *
+     *
+     *
+     */
     public BudgetLogic() {           //starts the class
-        
+
     }
 
+    /**
+     * Method that allows refreshing the BudgetPlan class, erasing all data on
+     * it by creating new one
+     *
+     *
+     *
+     *
+     */
     public void refresh() {
         bp = new BudgetPlan();
     }
 
+    /**
+     * Prints out String representation of the BudgetLogic class
+     *
+     *
+     *
+     * @return string representation of toString methods of DataSpec objects on
+     * BudgetPlan
+     */
     public String printBudget() {  //returns string of a budgetplan specified
 
         return bp.toString();
 
     }
-    public double returntotalbudget(User u){
+
+    /**
+     * Method that allows calling the total value of user's budget
+     *
+     * @param u User that is logged in
+     *
+     * @return combined double value of all DataSpec objects contained in the
+     * User's BudgetPlan
+     */
+    public double returntotalbudget(User u) {
         double g = 0;
-        for(DataSpec d : u.getBpp().getBudgetData()){
-            g = d.getAmount()+g;
+        for (DataSpec d : u.getBpp().getBudgetData()) {
+            g = d.getAmount() + g;
         }
         return g;
     }
 
+    /**
+     * Method that is used to enter DataSpec objects on the User's BudgetPlan
+     *
+     * @param u User whose dataplan is being appended to
+     * @param data String version of data to be saved
+     *
+     * @return String representing success or failure of the event
+     */
     public String enterData(User u, String data) {              //puts entered dataspec to the plan
         bp = u.getBpp();
         String[] dubs = data.split(", ");
@@ -61,6 +102,14 @@ public class BudgetLogic implements Serializable{
         }
     }
 
+    /**
+     * Method used to check User's budget with their BudgetPlan
+     *
+     * @param u User whose data is used
+     *
+     * @return double representing difference between BudgetPlan's total value
+     * and User's active account s total value for current month
+     */
     public String compareToUsersSpending(User u) {       //summs the list of the budget and compares to user's total
         month = date.get(Calendar.MONTH) + 1;
         double difference = 0;
@@ -69,11 +118,6 @@ public class BudgetLogic implements Serializable{
         }
         difference = difference - u.monthlyTotal();
         return "You have " + difference + " left of your budget";     //
-    }
-
-    public void newPlan(User u) {
-        bp = new BudgetPlan();
-        u.setBudget(bp);       //creates new plan to specified user
     }
 
 }

@@ -31,15 +31,23 @@ public class User implements Serializable {
     DataSpec use;           // null entry on the data list
     int month;
     GregorianCalendar date = new GregorianCalendar();
-    BudgetPlan BP;
+    BudgetPlan Bp;
 
-    //luodaan metodit käyttäjän luomiselle, ja käyttäjän tietojen hakemiselle ja asettamiselle
+    /**
+     * Constructs an user and initializes their HashMaps containing data, their
+     * account status and position data is called from
+     *
+     * @param username username
+     * @param password password
+     *
+     *
+     */
     public User(String username, String password) {
         //when new user is created, software asks for username and a password
         this.username = username;
         this.password = password;
         data = new HashMap<>();
-        BP = new BudgetPlan();
+        Bp = new BudgetPlan();
         this.status = 1;
         this.dataentry = 0;     //starts data entries from 0
         accountlist.put(1, data);
@@ -53,11 +61,22 @@ public class User implements Serializable {
     }
 
     public void setBudget(BudgetPlan bp) {
-        BP = bp;
+        Bp = bp;
     }
-    public BudgetPlan getBpp(){
-        return BP;
+
+    public BudgetPlan getBpp() {
+        return Bp;
     }
+
+    /**
+     * Method that counts the current month's total value from DataSpec objects
+     * on the list
+     *
+     *
+     *
+     * @return double value representing the total of DataSpec objects stored on
+     * the active data list
+     */
     public double monthlyTotal() {
 
         month = date.get(Calendar.MONTH) + 1;
@@ -88,6 +107,14 @@ public class User implements Serializable {
         return this.password;
     }
 
+    /**
+     * Calls the String value of DataSpec objects stored on user's currently
+     * active account
+     *
+     *
+     *
+     * @return String value representing the active data HashMap
+     */
     public String getData() {
         String s = "You spun this silk: ";
         if (data == null) {
@@ -104,6 +131,14 @@ public class User implements Serializable {
         return s;           //returns datatype entry
     }
 
+    /**
+     * Method used to save DataSpec entries onto active data HashMap
+     *
+     * @param s string representation of DataSpec
+     *
+     * parameter is split by ", " and the split parts are used to create
+     * DataSpec objects for the data list
+     */
     public void setData(String s) {      // enters data entry to user's account's Map
         //double check is in RegisteredUsers, so not needed here
         data = accountlist.get(status);
@@ -116,6 +151,13 @@ public class User implements Serializable {
         data.put(this.dataentry, enter);   //puts the appended data on the account
     }
 
+    /**
+     * Method used to change account value of User
+     *
+     * @param s string user's entry
+     *
+     * @return String value representing the account change event
+     */
     public String changeAccount(String s) {
         int i = 0;
         String message = "That account doesn't exist, make sure you entered your account number correctly\";";
@@ -137,6 +179,13 @@ public class User implements Serializable {
         }
     }
 
+    /**
+     * Method that increases user's active accounts by one
+     *
+     *
+     *
+     *
+     */
     public void createaccount() {
         use = new DataSpec("", 0.0, "");
         int size = accountlist.size() + 1;

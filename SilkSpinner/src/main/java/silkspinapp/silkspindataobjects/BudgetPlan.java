@@ -10,32 +10,53 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 /**
- *essentially a list of specified dataspec objects that have been planned as expenditures
+ * essentially a list of specified dataspec objects that have been planned as
+ * expenditures
+ *
  * @author tvierine
  */
-public class BudgetPlan implements Serializable{
+public class BudgetPlan implements Serializable {
+
     double planned;
     private ArrayList<DataSpec> n;
-    
-    public BudgetPlan(){
+
+    /**
+     * Constructor that is used to create BudgetPlan objects which store
+     * DataSpec objects on an ArrayList
+     *
+     *
+     *
+     *
+     */
+    public BudgetPlan() {
         n = new ArrayList();        //whenever a new plan is created, a new list is made
     }
-    
-    public void populateBudget(String s){   //puts dataspec objects on the list
+
+    /**
+     * Method used for entering DataSpec objects onto the BudgetPlan
+     *
+     *
+     *
+     *
+     */
+    public void populateBudget(String s) {   //puts dataspec objects on the list
         String[] h = s.split(", ");
         DataSpec d = new DataSpec(h[0], Double.parseDouble(h[1]), h[2]);
         n.add(d);
     }
-    public void addBudget(double d){
+
+    public void addBudget(double d) {
         planned = d;
     }
-    public ArrayList<DataSpec> getBudgetData(){
+
+    public ArrayList<DataSpec> getBudgetData() {
         return n;
     }
-    public String toString(){
+
+    public String toString() {
         String e = "";
-        for(DataSpec entry : n){
-            e = e + entry.toString()+"\n";  //appends every entry on their own lines
+        for (DataSpec entry : n) {
+            e = e + entry.toString() + "\n";  //appends every entry on their own lines
         }
         return "Your budget is: \n" + e;
     }

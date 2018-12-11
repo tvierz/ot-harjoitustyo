@@ -18,8 +18,7 @@ import silkspinapp.silkspindataobjects.BudgetPlan;
 /**
  *
  *
- * this class lists all users that are registered to the system, also handles
- * removing users that remove their accounts
+ * This class provides methods to modify and confirm details of User class
  *
  * @author tvierine
  */
@@ -32,35 +31,64 @@ public class RegisteredUsersLogic implements Serializable {
     String returnval;
 //    = new HashMap<>();
 
+    /**
+     *
+     * This method creates instance of RegisteredUsersLogic, including listed
+     * users, and date
+     *
+     *
+     *
+     *
+     */
     public RegisteredUsersLogic() {
         userlist = new HashMap();
         now = new Date();               //fetches current date upon being constructed
         returnval = sdf.format(now);
     }
-//
-//    public double fetchDateData(User u, int month) { //gets specified user, and uses given month to sum all entries of given month
-//        return userlist.get(u).monthlyTotal(month);           //gets user's data from specified date
-//    }
 
+    /**
+     * This method is responsible for reading the file where userdata is stored
+     * and saving the data for the class to use
+     */
     public void initialize() {
         userlist = spin.read();                // reads savefile into the userlist
     }
 
+    /**
+     * This method is used to call String value for date
+     *
+     * @return current date in form dd.mm.yyyy form
+     *
+     *
+     */
     public String showDate() {               //formats the date to display DD.MM.YYYY
 
         return returnval;                                //returns the formatted date
     }
 
+    /**
+     * Saving of currently active data to a file
+     *
+     */
     public void save() {             // saves current data on registeredusers to the local file
         spin.write(userlist);
     }
 
+    /**
+     * Method that can be used to confirm presence of user on the list
+     *
+     * @param u User that is trying to register
+     *
+     *
+     *
+     * @return returns string representing whether or not user is on the list
+     */
     public String listUser(User u) {
         if (userlist.containsKey(u.getUsername()) == false) {     // if user is not on the list, they are added to the list
 
             String username = u.getUsername();
             userlist.put(username, u);                              //adds user and their username to the list of users
-      
+
             return "User registered succesfully";                   //returns statement whether or not registration succeeded or not
         } else {
             // if user is listed, do nothing
@@ -68,6 +96,18 @@ public class RegisteredUsersLogic implements Serializable {
         }
     }
 
+    /**
+     * Method used to log user in to the application
+     *
+     *
+     *
+     *
+     * @param user username
+     * @param pass password or safeword
+     *
+     * @return returns the User matching given parameters, otherwise a default
+     * "no" user is returned
+     */
     public User login(String user, String pass) {                       //creates empty user with name that can't be registered
         User logged = new User("no", "no");                 //placeholder for usertest
         if (userlist.containsKey(user)) {                           //if user map contains username
@@ -91,6 +131,14 @@ public class RegisteredUsersLogic implements Serializable {
         return logged;                                      //returns either the default "no" user, or the user who logged in
     }
 
+    /**
+     * Method used for the registration event
+     *
+     *
+     * @param user username
+     * @param pass password
+     * @return method returns a string value representing the registration event
+     */
     public String register(String user, String pass) {           //handles registry part and tells ui what happened as result
         String msg = "Registry has failed";
         if (userlist.containsKey(user) == false) {                         //if username not taken, program lists user and tells them they have been registered
@@ -114,6 +162,16 @@ public class RegisteredUsersLogic implements Serializable {
         return msg;
     }
 
+    /**
+     * Method used to enter data values for the user
+     *
+     * @param u user that is logged in
+     * @param data data that user is trying to save
+     *
+     *
+     * @return method returns string representation of the data entry event
+     *
+     */
     public String enterData(User u, String data) {
         String[] dubs = data.split(", ");
         if (dubs.length == 3) {                             //entered data must split into list of length 3
@@ -129,19 +187,48 @@ public class RegisteredUsersLogic implements Serializable {
         }
     }
 
+    /**
+     * Get user
+     *
+     * @param u username
+     *
+     * @return method returns the user that is associated with the parameter
+     */
     public User getUser(String u) {
         return userlist.get(u);                                 //returns user with given username
     }
 
+    /**
+     * Alternative method to check user's presence on the list
+     *
+     * @param u username
+     *
+     * @return true if user is on the list
+     */
     public Boolean freeUser(String u) {
         return userlist.containsKey(u); //if username on the list, returns true, false is returned otherwise
 
     }
 
+    /**
+     * Method that returns the list containing Users and usernames involved with
+     * them
+     *
+     *
+     *
+     * @return HashMap<String, User> representing currently active data
+     */
     public HashMap<String, User> getListMap() {
         return userlist;
     }
 
+    /**
+     * Method that allows removal of User and all their data from the list
+     *
+     *
+     *
+     *
+     */
     public void removeUser(String u) {           //removes all userdata from the program
         userlist.remove(u, userlist.get(u));
     }
