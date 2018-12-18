@@ -6,33 +6,20 @@
 package silkspinapp.silkspinUI;
 
 import java.io.File;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Properties;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.*;
 import silkspinapp.silkspindataobjects.User;
 import silkspinapp.logicandoperations.RegisteredUsersLogic;
 import silkspinapp.logicandoperations.SilkSpinDataSaving;
@@ -41,37 +28,26 @@ import java.text.*;
 import silkspinapp.logicandoperations.BudgetLogic;
 
 /**
- *
+ *Check date for un: Kalle, pass: kala account entries also budget page entries
  * @author tvierine
  */
 //this class creates the UI for the app
 public class SilkSpinnerUI extends Application {
 
-    private Scene registryScreen;
-    private Scene loginScreen;
+    private Scene registryScreen;                                          
+    private Scene loginScreen;                                              
     private Scene userScene;
     private Scene accountScene;
     private Scene settingScene;
-    private final RegisteredUsersLogic ru = new RegisteredUsersLogic();
-    private User loggeduser;
-    private File f;
-    private BudgetLogic bl = new BudgetLogic();
-    private Scene budgetScene;
+    private final RegisteredUsersLogic ru = new RegisteredUsersLogic();     // operations pertaining to userdata as well as saving and reading the given data
+    private User loggeduser;                                                //signifies user that has logged in
+    private BudgetLogic bl = new BudgetLogic();                             //logic used relating to budget operations
+    private Scene budgetScene;                                              //budget screen that is created later
 
     private Label menuEntries = new Label();
 
-    public void startup() throws Exception {
-        Properties input = new Properties();
-        input.load(new FileInputStream("Configure"));
+ 
 
-        String userData = input.getProperty("user");
-        String userOwned = input.getProperty("userLog");
-
-    }
-
-//    public Node createNodes(){
-//        
-//    }
     @Override
     public void start(Stage primaryStage) {
         //starts the app
@@ -86,7 +62,7 @@ public class SilkSpinnerUI extends Application {
         Label loginUser = new Label("Enter Username here: "); //gives label to username textbox
         Label passLabel = new Label("Enter Password here: "); //labels the password box
         TextField insertUser = new TextField();
-        TextField insertPass = new TextField();
+        PasswordField insertPass = new PasswordField();
 
         userInput.getChildren().addAll(loginUser, insertUser);
         passInput.getChildren().addAll(passLabel, insertPass);
@@ -97,6 +73,7 @@ public class SilkSpinnerUI extends Application {
 
         Button loginbtn = new Button("Login");
         Button registerButton = new Button("Register new account");
+        loginbtn.setDefaultButton(true);    //loginbutton is pressed using enter when app starts
         loginbtn.setOnAction(a -> {                             //attempt to log in
             String usersname = insertUser.getText();            //gets the entire username entered
             String password = insertPass.getText();             //gets the entire password
@@ -177,29 +154,31 @@ public class SilkSpinnerUI extends Application {
         Button newaccount = new Button("Create new account"); // button for new account
         Button monthlytotalbtn = new Button("Get this month's total spendings");
         Button budgetpagebtn = new Button("Enter budget page");
+        Button enterbudgetbtn = new Button("Enter item on your budget plan");
         Label displayacc = new Label();
+        ScrollPane scrollingaccountdisplay = new ScrollPane(displayacc);        //utilizes scrollable window to display account data that exceeds the window's standard size
 
         //creates new account functionality
         Label displayaccountno = new Label("Select your account number: ");
-
         TextField selectaccount = new TextField();
         Button selectaccountbtn = new Button("Select account");
         Button createaccountbtn = new Button("Create new account");
 
         budgetpagebtn.setOnAction(a -> {
             primaryStage.setScene(budgetScene); //hops to budget screen
+            bl.selectBp(loggeduser);            // selects the budget plan of logged user to be used on the budget page
+            enterbudgetbtn.setDefaultButton(true);  //dataentry button  on budget page used by default when pressing enter on entering budget screen
         });
         createaccountbtn.setOnAction(a -> {
             loggeduser.createaccount();         //creates account for currently logged user
         });
         monthlytotalbtn.setOnAction(a -> {
-//            System.out.println(loggeduser.a());
-            String n = "This month's total spendings: " + loggeduser.monthlyTotal();
+            String n = "This month's total spendings: " + loggeduser.monthlyTotal() + "€";
             menuEntries.setText(n);
 
         });
         selectaccountbtn.setOnAction(a -> {
-            menuEntries.setText(loggeduser.changeAccount(selectaccount.getText()));           //clears all labels from accountscreen
+            menuEntries.setText(loggeduser.changeAccount(selectaccount.getText()));           //clears all labels from accountscreen and changes account if entry valid
             displayacc.setText("");             //
         });
 
@@ -216,6 +195,7 @@ public class SilkSpinnerUI extends Application {
             loginLabel.setText("Account succesfully removed, goodbye");  //displays succsessful account removal in login screen
         });
         accountbtn.setOnAction(a -> {
+            enterbtn.setDefaultButton(true);  //dataentry button on accounts page used by default when pressing enter on entering accounts page
             primaryStage.setScene(accountScene);
         });
         backbtn1.setOnAction(a -> {
@@ -233,6 +213,8 @@ public class SilkSpinnerUI extends Application {
             displayacc.setText("");                                 // clears displaywindow after logout
             loggeduser = null;
             loginLabel.setText("Logged out");                                 //Notifies of logout
+            
+            loginbtn.setDefaultButton(true);    //loginbutton is set to be pressed on enter when logged out
         });
         displaybtn.setOnAction(a -> {
             displayacc.setText(loggeduser.getData());               //displays userdata on request from display button
@@ -250,13 +232,15 @@ public class SilkSpinnerUI extends Application {
         userscreen.getChildren().addAll(userss, menuEntries, selectaccount, selectaccountbtn, logoutbtn, accountbtn, settingsbtn, budgetpagebtn);
         userScene = new Scene(userscreen, 600, 400);
 
-        //creates accounts screen, which currently consists out of textbox that enters data, and a label that displays entered data
+        //creates accounts screen
         HBox accountss = new HBox(20);
         TextField dataentry = new TextField();
-        accountScreen.getChildren().addAll(accountss, menuEntries, dataentry, displayacc, enterbtn, displaybtn, backbtn1, monthlytotalbtn);      //connects HBox and text field for data entry
+        accountScreen.getChildren().addAll(accountss, menuEntries, dataentry, scrollingaccountdisplay, enterbtn, displaybtn, backbtn1, monthlytotalbtn);      //connects HBox and text field for data entry
+        
         enterbtn.setOnAction(a -> {                                          //functionalizes data entry button
             menuEntries.setText(ru.enterData(loggeduser, dataentry.getText()));       //saves entered data to user's currently specified account and gives message describing entry event
             ru.save();
+            displayacc.setText(loggeduser.getData()); //refreshes the account display with entered data
             dataentry.setText("");
 
         });
@@ -274,21 +258,29 @@ public class SilkSpinnerUI extends Application {
         });
         settingScene = new Scene(settingScreen, 600, 400);              //puts VBox into the display (600x400)
 
-        //budget Manibulation screen
+        //%% budget Manibulation screen
         HBox budgetplannerHB = new HBox(10);
         TextField budgetdataentry = new TextField();
         Label budgetlisted = new Label();
-        Label entryopsbudget = new Label("Not empty");
-        Button enterbudgetbtn = new Button("Enter item on your budget plan");
+        ScrollPane budgetpanel = new ScrollPane(budgetlisted);          //sets the budget window to be a scroll pane so it can be used to display budget entries better
+        Label entryopsbudget = new Label("Do you need to make a new budget plan for the month? Today's date is: " + ru.showDate());
+        
         Button comparetousedbtn = new Button("Compare your monthly spendings to your budget");
         Button backbtn3 = new Button("Return to user screen");      //yet another back button since they stop working somewhere if you put them on multiple VBoxes
-        budgetScreen.getChildren().addAll(budgetplannerHB, budgetlisted, entryopsbudget, enterbudgetbtn, budgetdataentry, comparetousedbtn, backbtn3);
+        Button refreshbudgetbtn = new Button("Clear budget plan");      //clears the active budget plan so new one can be made
+        budgetScreen.getChildren().addAll(budgetplannerHB, budgetpanel, entryopsbudget, enterbudgetbtn, budgetdataentry, comparetousedbtn, backbtn3, refreshbudgetbtn);
         budgetScene = new Scene(budgetScreen, 600, 400);
+        
         enterbudgetbtn.setOnAction(a -> {
             entryopsbudget.setText(bl.enterData(loggeduser, budgetdataentry.getText())); //tells how the operation of adding to budget went
 
             budgetlisted.setText(bl.printBudget() + "\n Total budget for the month is:" + bl.returntotalbudget(loggeduser));       //refreshes the budgetplan with every entry, so User can see their plan
             budgetdataentry.setText("");    //cleans the text field after data entry
+        });
+        
+        refreshbudgetbtn.setOnAction(a -> {
+            bl.refresh(loggeduser);
+            budgetlisted.setText("Latest budget plan cleared, add new budget entries");
         });
         comparetousedbtn.setOnAction(a -> {     //sets the banner to tell user how much of their budget they have used
             budgetlisted.setText(bl.compareToUsersSpending(loggeduser));

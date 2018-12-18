@@ -17,8 +17,6 @@ import java.util.*;
  * software with the account
  */
 public class DataSpec implements Serializable {
-
-    public String comment;
     public Double amount;
     public String type;
     Date now;
@@ -27,20 +25,20 @@ public class DataSpec implements Serializable {
 
     /**
      * Constructor used for creating DataSpec objects
+     * DataSpec is the object used to represent budget entries
      *
-     * @param comm comment of the DataSpec
      * @param amount value of the DataSpec
      * @param type type of the DataSpec
      *
      */
-    public DataSpec(String comm, Double amount, String type) {      //creates a data entry
+    public DataSpec(Double amount, String type) {      //creates a data entry
         now = new Date();               //confirms date on creation of entry, again
-        this.comment = comm;
         this.amount = amount;
         this.type = type;
-        date = sdf.format(now);
+        date = sdf.format(now);         //every dataspec entry gets a date on which they are created
 
     }
+    
 
     /**
      * Method used to get integer representing the current month
@@ -57,12 +55,15 @@ public class DataSpec implements Serializable {
     }
 
     public double getAmount() {
-        return amount;              // returns the double value of the entry
+        return amount;              // returns the double representing the object's value
     }
 
     @Override
     public String toString() {
-        return date + ": " + comment + " AMOUNT: " + amount.toString() + " TYPE OF EXPENSE: " + type;          //returns data entries in shape "date, comment, type, amount"
+        String s = date + ": " + "AMOUNT: " + amount.toString() + "€" + " TYPE OF EXPENSE: " + type;
+        StringBuilder sb = new StringBuilder();
+        
+        return s;          //returns data entries in shape "date, comment, type, amount"
     }
 
 }

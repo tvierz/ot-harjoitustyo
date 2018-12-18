@@ -44,8 +44,13 @@ public class BudgetLogic implements Serializable {
      *
      *
      */
-    public void refresh() {
+    public void refresh(User u) {       // clears the old budget plan and sets the user's plan to be the new clear one
         bp = new BudgetPlan();
+        u.setBudget(bp);
+    }
+    
+    public void selectBp(User u){
+        bp = u.getBpp();                //selects budget plan to use for plan operations, mainly used when entering the budget page
     }
 
     /**
@@ -86,19 +91,19 @@ public class BudgetLogic implements Serializable {
      *
      * @return String representing success or failure of the event
      */
-    public String enterData(User u, String data) {              //puts entered dataspec to the plan
-        bp = u.getBpp();
+    public String enterData(User u, String data) {              //puts entered dataspec to the currently active plan
+        u.setBudget(bp);                                        // specifies that the budget plan to use is the current budget plan
         String[] dubs = data.split(", ");
-        if (dubs.length == 3) {
-            Scanner doubles = new Scanner(dubs[1]);
+        if (dubs.length >= 2) {
+            Scanner doubles = new Scanner(dubs[0]);
             if (doubles.hasNextDouble() == true) {
                 bp.populateBudget(data);
                 return "";
             } else {
-                return "Please make sure your entry is in format: 'comment, amount, type'";
+                return "Please make sure your entry is in format: 'amount, type'";
             }
         } else {
-            return "Please make sure your entry is in format: 'comment, amount, type'"; //if the entered value doesn't have a double, it's false    
+            return "Please make sure your entry is in format: 'amount, type'"; //if the entered value doesn't have a double, it's false    
         }
     }
 
@@ -112,12 +117,15 @@ public class BudgetLogic implements Serializable {
      */
     public String compareToUsersSpending(User u) {       //summs the list of the budget and compares to user's total
         month = date.get(Calendar.MONTH) + 1;
+        if (u.getStatus() == -1){
+            return "Select existing account to compare";
+        }
         double difference = 0;
         for (DataSpec d : bp.getBudgetData()) {  //iterates through the list and adds all the values to total
             difference = difference + d.getAmount();
         }
         difference = difference - u.monthlyTotal();
-        return "You have " + difference + " left of your budget";     //
+        return "You have " + difference + "€ left of your budget";     //
     }
 
 }

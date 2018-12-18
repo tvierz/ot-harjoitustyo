@@ -174,16 +174,19 @@ public class RegisteredUsersLogic implements Serializable {
      */
     public String enterData(User u, String data) {
         String[] dubs = data.split(", ");
-        if (dubs.length == 3) {                             //entered data must split into list of length 3
-            Scanner doubles = new Scanner(dubs[1]);
+        if(u.getStatus() == -1){
+            return "Account doesn't exist";
+        }
+        if (dubs.length >= 2) {                             //entered data must split into list of length 2 or greater
+            Scanner doubles = new Scanner(dubs[0]);         //confirms that the first entry is the value of the entry
             if (doubles.hasNextDouble() == true) {
                 u.setData(data);             // writes data to account that is the user's status at the moment
                 return "Data has been entered";
             } else {
-                return "Please make sure your entry is in format: 'comment, amount, type'";
+                return "Please make sure your entry is in format: 'amount, type'";
             }
         } else {
-            return "Please make sure your entry is in format: 'comment, amount, type'"; //if the entered value doesn't have a double, it's false    
+            return "Please make sure your entry is in format: 'amount, type'"; //if the entered value doesn't have a double, it's false    
         }
     }
 

@@ -41,7 +41,7 @@ public class BudgetPlan implements Serializable {
      */
     public void populateBudget(String s) {   //puts dataspec objects on the list
         String[] h = s.split(", ");
-        DataSpec d = new DataSpec(h[0], Double.parseDouble(h[1]), h[2]);
+        DataSpec d = new DataSpec(Double.parseDouble(h[0]), h[1]);
         n.add(d);
     }
 

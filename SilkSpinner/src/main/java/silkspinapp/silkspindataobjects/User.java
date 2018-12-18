@@ -78,7 +78,9 @@ public class User implements Serializable {
      * the active data list
      */
     public double monthlyTotal() {
-
+        if(status == -1){
+            return 0.0;
+        }
         month = date.get(Calendar.MONTH) + 1;
         double mototal = 0;             //starts at nothing
         for (Integer i : data.keySet()) {
@@ -117,7 +119,7 @@ public class User implements Serializable {
      */
     public String getData() {
         String s = "You spun this silk: ";
-        if (data == null) {
+        if (status == -1) {
             return "No account selected";
         } else {
             if (data.keySet().size() > 0) {
@@ -144,10 +146,9 @@ public class User implements Serializable {
         data = accountlist.get(status);
         this.dataentry = data.size() + 1;         //puts new entries on separate values
         String[] split = s.split(", ");    //splits given data entry into parts
-        String comm = split[0];
-        Double amount = Double.parseDouble(split[1]);    //splits double value into a double
-        String type = split[2];
-        DataSpec enter = new DataSpec(comm, amount, type);
+        Double amount = Double.parseDouble(split[0]);    //splits double value into a double
+        String type = split[1];
+        DataSpec enter = new DataSpec(amount, type);
         data.put(this.dataentry, enter);   //puts the appended data on the account
     }
 
@@ -160,7 +161,7 @@ public class User implements Serializable {
      */
     public String changeAccount(String s) {
         int i = 0;
-        String message = "That account doesn't exist, make sure you entered your account number correctly\";";
+        String message = "That account number " + s + " doesn't exist, make sure you entered correct account number";
         try {                            //checks that the entered value is integer
             i = Integer.parseInt(s);
 
@@ -170,7 +171,7 @@ public class User implements Serializable {
                 message = i + "";
                 return "Your account number " + message + " has been selected";
             } else {
-                data = null;
+                this.status = -1;       //assigns status to be an error value in case an account doesn't exist
                 return message;
             }
 
@@ -187,7 +188,7 @@ public class User implements Serializable {
      *
      */
     public void createaccount() {
-        use = new DataSpec("", 0.0, "");
+        use = new DataSpec(0.0, "");
         int size = accountlist.size() + 1;
         this.accountlist.put(size, new HashMap<>());  //creates new account with number that is 1 greater than current account amount total
 
