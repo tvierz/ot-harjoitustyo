@@ -8,6 +8,7 @@
 
 [Arkkitehtuuri](https://github.com/tvierz/ot-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
 
+[Käyttöohje](https://github.com/tvierz/ot-harjoitustyo/blob/master/dokumentointi/K%C3%A4ytt%C3%B6ohje(User%20Manual))
 
 ##### Sovellus
-[viikko 5 release](https://github.com/tvierz/ot-harjoitustyo/releases/tag/v0.02.0-alpha)
+[viikko 6 release](https://github.com/tvierz/ot-harjoitustyo/releases/tag/v0.02.2-alpha)
