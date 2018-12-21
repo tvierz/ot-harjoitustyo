@@ -47,7 +47,8 @@ public class BudgetPlan implements Serializable {
     public void addBudget(double d) {
         planned = d;
     }
-    public double getBudgetPlanned(){
+
+    public double getBudgetPlanned() {
         return planned;
     }
 
