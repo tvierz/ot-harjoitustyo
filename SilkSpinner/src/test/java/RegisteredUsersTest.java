@@ -4,160 +4,178 @@
  * and open the template in the editor.
  */
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import java.io.*;
+import java.nio.file.Files;
 import static org.junit.Assert.*;
-import java.util.*;
-import java.text.*;
+import silkspinapp.silkspindataobjects.BudgetPlan;
+import silkspinapp.silkspindataobjects.DataSpec;
 import silkspinapp.silkspindataobjects.User;
-import silkspinapp.logicandoperations.RegisteredUsersLogic;
 
 /**
  *
  * @author tvierine
  */
-public class RegisteredUsersTest {
+public class UserTest {
 
-    public User test;
-    public RegisteredUsersLogic ru;
+    User u;
+    DataSpec use;           // null entry on the data list
+    int month;
     Date now;
     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");      //determines the displayed date
-    String returnval;
-    String filename;
+    String date;
 
     @Before
-    public void setUp() {                       //initializes tests
-        test = new User("antti", "kala");
-        ru = new RegisteredUsersLogic();
-        ru.listUser(test);                      //user added to list
-        ru.listUser(new User("no", "no"));
-        now = new Date();               //fetches current date upon being constructed
-        returnval = sdf.format(now);
+    public void setUp() {
+        u = new User("antti", "tuisku");
+        now = new Date();               //confirms date on creation of entry, again
+        date = sdf.format(now);
+    }
+
+    @Test
+    public void userHasName() {
+        assertEquals(u.getUsername(), "antti");
+    }
+
+    @Test
+    public void userHasPassword() {
+        assertEquals(u.getPassword(), "tuisku");
+    }
+
+    @Test
+    public void userHasNoDataAtStart() {
+        assertEquals(u.getData(), "You spun this silk: ");
+    }
+
+    @Test
+    public void hashMapReturnedRight() {
+        HashMap<Integer, DataSpec> n = new HashMap<>();
+        u.setData("2, n");
+        n = u.getdataEntries();
+        assertEquals(n.get(1).toString(), "Date of entry: " + date + " AMOUNT: 2.0€ TYPE OF EXPENSE: n");
 
     }
 
     @Test
-    public void fileNameChangesRight() {         //if filename changes correctly, only "no" user should be present on the list
-        ru.save();                              //saves the data to currently active file
-        ru.changeFilenameForTests("embtii.ser");            //changed the data storage file into "Testfile.ser"
-        ru.initialize();                        //loads the empty file
-        assertEquals(ru.getListMap().size(), 1); //userdata should now only have a single entry, the default "no" user
+    public void userHasDataWhenAdded() {
+        u.setData("2, n");
+        assertEquals(u.getData(), "You spun this silk: \n"
+                + "Date of entry: " + date + " AMOUNT: 2.0€ TYPE OF EXPENSE: n");
     }
 
     @Test
-    public void dateIsCorrect() {
-        assertEquals(returnval, ru.showDate());
+    public void userDataStatusNegativeWhenAccountDoesnotExist() {
+        u.changeAccount(2 + "");
+        assertEquals(u.getStatus(), -1);
     }
 
     @Test
-    public void userLogsInRight() {
-        assertEquals(ru.login("antti", "kala"), test);
+    public void userDataAppendsCorrectly() {
+
+        u.setData("5, l");
+        u.setData("2, n");
+        assertEquals(u.getData(), "You spun this silk: \n"
+                + "Date of entry: " + date + " AMOUNT: 5.0€ TYPE OF EXPENSE: l\n"
+                + "Date of entry: " + date + " AMOUNT: 2.0€ TYPE OF EXPENSE: n");
     }
 
     @Test
-    public void userCanLogWithSafeword() {
-        test.setSafeword("nnii");
-        assertEquals(ru.login("antti", "nnii"), test);
+    public void userSafewordCorrectAtStart() {
+        assertEquals(u.getSafeword(), "onlysuperadmingodknowthispasswordimthebesthahahahahahahaa4329832576");
     }
 
     @Test
-    public void unknownUserCantLogIn() {
-        assertEquals(ru.login("k", "t").getUsername(), "no");
+    public void userSafewordCanBeChanged() {
+        u.setSafeword("n");
+        assertEquals(u.getSafeword(), "n");
     }
 
     @Test
-    public void userCanRegister() {
-        assertEquals(ru.register("kilon", "siika"), "Account has been created successfully");
+    public void userStatusIsOneAtStart() {
+        assertEquals(u.getStatus(), 1);
     }
 
     @Test
-    public void userCanBeListed() {              //if new user can be added into registry, test passes
-        ru.listUser(new User("hahaa", "krökkels"));
-        assertTrue(ru.freeUser("hahaa"));
+    public void accountsCreatedRight() {
+        u.createaccount();
+        u.changeAccount(2 + "");
+        assertEquals(u.getStatus(), 2);
     }
 
     @Test
-    public void multipleSameUsernamesCantList() {
-        assertEquals(ru.listUser(test), "user is already listed");
+    public void userBpCanBeAssignedAndIsCorrect() {
+        BudgetPlan bp = new BudgetPlan();
+        bp.populateBudget("20, y");
+        u.setBudget(bp);
+        assertEquals(u.getBpp().getBudgetData().get(0).getAmount() + "", 20.0 + "");
     }
 
     @Test
-    public void tooShortPasswordNotAccepted() {
-        assertEquals(ru.register("kilon", "si"), "Your password is too weak");
-
-    }
-
-    @Test
-    public void takenUsernameNotAccepted() {
-        assertEquals(ru.register("antti", "siiika"), "This username is already taken or your username is shorter than 4 characters");
-    }
-
-    @Test
-    public void tooShortUsernameNotAccepted() {
-        assertEquals(ru.register("SI", "lon"), "your username is too short");
-
-    }
-
-    @Test
-    public void mapReturnedRightWithObjectsOnIt() {
-        assertEquals(ru.getListMap().get("antti"), test);
-    }
-
-    @Test
-    public void mapEmptyWhenEmptied() {
-        ru.getListMap().clear();
-        assertEquals(ru.getUser("antti"), null);
-    }
-
-    @Test
-    public void enterDataRequiresParseableIntoDoubleAsSecondValue() {
-        assertEquals(ru.enterData(test, "1, n"), "Data has been entered");
+    public void accountChangeWorksCorrectlyAndAccountCanBeCreated() {
+        u.createaccount();
+        assertEquals(u.changeAccount("2"), "Your account number 2 has been selected");
 
     }
 
     @Test
-    public void dataEntryGoesRight() {
-        ru.enterData(test, "8005, l");
-        assertEquals(test.getdataEntries().get(1).getAmount() + "", 8005.0 + "");
+    public void wrongAccountTellsFault() {
+        assertEquals(u.changeAccount("29"), "Account number 29 doesn't exist, make sure you entered correct account number");
     }
 
     @Test
-    public void enterDataRejectsNonDoubleParseableValue() {
-        assertEquals(ru.enterData(test, "EITOIMI, n"), "Please make sure your entry is in format: 'amount, type'");
+    public void toStringRight() {
+        assertEquals(u.toString(), u.getUsername());
+    }
+
+    @Test
+    public void setDataOnAccountRight() {
+        u.createaccount();
+        u.changeAccount(2 + "");
+        u.setData("2, n");
+        assertEquals(u.getData(), "You spun this silk: \n"
+                + "Date of entry: " + date + " AMOUNT: 2.0€ TYPE OF EXPENSE: n");
 
     }
 
     @Test
-    public void userCalledRight() {
-        assertEquals(ru.getUser("antti"), test);
+    public void setDataNotContaminateOtherAccounts() {
+
+        u.createaccount();
+        u.changeAccount(2 + "");
+        u.setData("2, n");
+        u.changeAccount(1 + "");
+        u.setData("5, l");
+        assertEquals(u.getData(), "You spun this silk: \n"
+                + "Date of entry: " + date + " AMOUNT: 5.0€ TYPE OF EXPENSE: l");
     }
 
     @Test
-    public void multipleUsernamesNotAllowed() {  //tests that multiple users cannot register with same username
-        assertEquals(ru.listUser(test), "user is already listed");
+    public void monthlyTotalIsRight() {
+        u.setData("2.0, y");
+        u.setData("5.0, t");
+        String test = u.monthlyTotal() + "";
+        assertEquals(test, "7.0");
     }
 
     @Test
-    public void dataWrittenRightOnRightAccountOfUser() {
-        ru.enterData(test, "3.0");
-        ru.getUser(test.getUsername()).createaccount();
-        ru.getUser(test.getUsername()).changeAccount(2 + "");
-        ru.enterData(test, "5.08");
-        assertEquals(test.getData(), "You spun this silk: ");
+    public void monthlyTotalIsWrong() {
+        u.setData("2.0, y");
+        u.setData("5.0, t");
+        u.changeAccount("29");
+        assertEquals(u.monthlyTotal() + "", 0.0 + "");
     }
 
     @Test
-    public void userCanBeCalledFromMapByUsername() {
-        assertEquals(ru.getUser(test.getUsername()), test);     //calls user "test" from the list and compares it to the user test
-    }
-
-    @Test
-    public void userCanBeRemovedFromMapByUsername() {
-        ru.removeUser(test.getUsername());
-        assertFalse(ru.freeUser(test.getUsername()));
+    public void monthlyTotalIsZeroAtStart() {
+        assertEquals(u.monthlyTotal() + "", 0, 0);
     }
 
     @After
