@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,12 +20,13 @@ import silkspinapp.logicandoperations.RegisteredUsersLogic;
  * @author tvierine
  */
 public class RegisteredUsersTest {
+
     public User test;
     public RegisteredUsersLogic ru;
     Date now;
     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");      //determines the displayed date
     String returnval;
-    String filename; 
+    String filename;
 
     @Before
     public void setUp() {                       //initializes tests
@@ -36,7 +36,7 @@ public class RegisteredUsersTest {
         ru.listUser(new User("no", "no"));
         now = new Date();               //fetches current date upon being constructed
         returnval = sdf.format(now);
-        
+
     }
 
     @Test
@@ -46,8 +46,9 @@ public class RegisteredUsersTest {
         ru.initialize();                        //loads the empty file
         assertEquals(ru.getListMap().size(), 1); //userdata should now only have a single entry, the default "no" user
     }
+
     @Test
-    public void dateIsCorrect(){
+    public void dateIsCorrect() {
         assertEquals(returnval, ru.showDate());
     }
 
@@ -77,8 +78,9 @@ public class RegisteredUsersTest {
         ru.listUser(new User("hahaa", "krökkels"));
         assertTrue(ru.freeUser("hahaa"));
     }
+
     @Test
-    public void multipleSameUsernamesCantList(){
+    public void multipleSameUsernamesCantList() {
         assertEquals(ru.listUser(test), "user is already listed");
     }
 
@@ -115,8 +117,9 @@ public class RegisteredUsersTest {
         assertEquals(ru.enterData(test, "1, n"), "Data has been entered");
 
     }
+
     @Test
-    public void dataEntryGoesRight(){
+    public void dataEntryGoesRight() {
         ru.enterData(test, "8005, l");
         assertEquals(test.getdataEntries().get(1).getAmount() + "", 8005.0 + "");
     }
@@ -126,9 +129,9 @@ public class RegisteredUsersTest {
         assertEquals(ru.enterData(test, "EITOIMI, n"), "Please make sure your entry is in format: 'amount, type'");
 
     }
-    
+
     @Test
-    public void userCalledRight(){
+    public void userCalledRight() {
         assertEquals(ru.getUser("antti"), test);
     }
 
@@ -159,7 +162,7 @@ public class RegisteredUsersTest {
 
     @After
     public void tearDown() {
-        
+
     }
 
     // TODO add test methods here.
