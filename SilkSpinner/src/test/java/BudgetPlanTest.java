@@ -18,12 +18,13 @@ import silkspinapp.silkspindataobjects.DataSpec;
  * @author tvierine
  */
 public class BudgetPlanTest {
+
     BudgetPlan bp;
     DataSpec d;
-    
+
     public BudgetPlanTest() {
     }
-    
+
     @Before
     public void setUp() {
         bp = new BudgetPlan();
@@ -31,15 +32,18 @@ public class BudgetPlanTest {
         d = new DataSpec(20.0, "yy");
         bp.populateBudget("20, yy");
     }
+
     @Test
-    public void bpCanBePopulatedRight(){
+    public void bpCanBePopulatedRight() {
         bp.populateBudget("50, ll");                    //adds entry
         assertEquals(bp.getBudgetData().size(), 2);     //there should now be 2 entries, before tests entry and this method's entry
     }
+
     @Test
-    public void bpToStringRight(){
+    public void bpToStringRight() {
         assertEquals(bp.toString(), "Your budget is: \n" + d.toString() + "\n");
     }
+
     @After
     public void tearDown() {
     }
