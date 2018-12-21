@@ -17,15 +17,17 @@ import silkspinapp.silkspindataobjects.User;
  * This class contains methods to save and read data
  */
 public class SilkSpinDataSaving {
+
     String filename;
-    
-    public SilkSpinDataSaving(){            //by default, the data is saved to Userdat.ser file
+
+    public SilkSpinDataSaving() {            //by default, the data is saved to Userdat.ser file
         filename = "Userdat.ser";
     }
-    public void changeFileForTests(String s){   //Destination file can be changed here or by calling from RegisteredUsersLogic
+
+    public void changeFileForTests(String s) {   //Destination file can be changed here or by calling from RegisteredUsersLogic
         filename = s;
     }
-    
+
     /**
      * Method that is used to save active data into a Userdat.ser file
      *
@@ -75,8 +77,8 @@ public class SilkSpinDataSaving {
         return hm;                  //returns read hashmap containing at least the null user
 
     }
-    
-    public String filenameReturnForPointlessReasonsForTest(){
+
+    public String filenameReturnForPointlessReasonsForTest() {
         return filename;
     }
 }
