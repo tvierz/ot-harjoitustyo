@@ -47,18 +47,21 @@ public class RegisteredUsersLogic implements Serializable {
         returnval = sdf.format(now);
         filename = "Testfile.ser";
     }
-    
+
     /**
      *
-     * This method allows changing the file in which the app reads from and/or writes to by replacing "Testfile.ser" with another name
-     * 
-     * Note that a textfile that is named "File.ser", where 'file' is the desired filename, MUST be present at the root folder
+     * This method allows changing the file in which the app reads from and/or
+     * writes to by replacing "Testfile.ser" with another name
      *
-     *This is because java seems to be unable to create the file by itself due to acccess right problems
+     * Note that a textfile that is named "File.ser", where 'file' is the
+     * desired filename, MUST be present at the root folder
+     *
+     * This is because java seems to be unable to create the file by itself due
+     * to acccess right problems
      *
      *
      */
-    public void changeFilenameForTests(String s){   //changes the write/read destination of this class to Testfile.ser  ##tested
+    public void changeFilenameForTests(String s) {   //changes the write/read destination of this class to Testfile.ser  ##tested
         filename = s;
         spin.changeFileForTests(filename);
     }
@@ -98,7 +101,8 @@ public class RegisteredUsersLogic implements Serializable {
      *
      *
      *
-     * @return returns string representing whether or not user is on the list       ##tested
+     * @return returns string representing whether or not user is on the list
+     * ##tested
      */
     public String listUser(User u) {
         if (userlist.containsKey(u.getUsername()) == false) {     // if user is not on the list, they are added to the list
@@ -123,8 +127,8 @@ public class RegisteredUsersLogic implements Serializable {
      * @param pass password or safeword
      *
      * @return returns the User matching given parameters, otherwise a default
-     * "no" user is returned
-     * The "no" user is unique and cannot be created by users
+     * "no" user is returned The "no" user is unique and cannot be created by
+     * users
      */
     public User login(String user, String pass) {                       //creates empty user with name that can't be registered ##tested
         User logged = new User("no", "no");                 //placeholder for usertest
@@ -150,9 +154,9 @@ public class RegisteredUsersLogic implements Serializable {
     }
 
     /**
-     * Method used for the registration event
-     *The username chosen to be registered has to be at least 5 symbols long
-     * The chosen password has to be at least 3 letters long
+     * Method used for the registration event The username chosen to be
+     * registered has to be at least 5 symbols long The chosen password has to
+     * be at least 3 letters long
      *
      * @param user username
      * @param pass password
@@ -193,7 +197,7 @@ public class RegisteredUsersLogic implements Serializable {
      */
     public String enterData(User u, String data) {                              //##tested
         String[] dubs = data.split(", ");
-        if(u.getStatus() == -1){
+        if (u.getStatus() == -1) {
             return "Account doesn't exist";
         }
         if (dubs.length >= 2) {                             //entered data must split into list of length 2 or greater
