@@ -17,6 +17,7 @@ import java.util.*;
  * software with the account
  */
 public class DataSpec implements Serializable {
+
     public Double amount;
     public String type;
     Date now;
@@ -24,8 +25,8 @@ public class DataSpec implements Serializable {
     String date;
 
     /**
-     * Constructor used for creating DataSpec objects
-     * DataSpec is the object used to represent budget entries
+     * Constructor used for creating DataSpec objects DataSpec is the object
+     * used to represent budget entries
      *
      * @param amount value of the DataSpec
      * @param type type of the DataSpec
@@ -38,7 +39,6 @@ public class DataSpec implements Serializable {
         date = sdf.format(now);         //every dataspec entry gets a date on which they are created
 
     }
-    
 
     /**
      * Method used to get integer representing the current month
@@ -62,7 +62,7 @@ public class DataSpec implements Serializable {
     public String toString() {
         String s = "Date of entry: " + date + " " + "AMOUNT: " + amount.toString() + "€" + " TYPE OF EXPENSE: " + type;
         StringBuilder sb = new StringBuilder();
-        
+
         return s;          //returns data entries in shape "date, comment, type, amount"
     }
 
