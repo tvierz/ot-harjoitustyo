@@ -48,12 +48,12 @@ public class BudgetLogic implements Serializable {
         bp = new BudgetPlan();
         u.setBudget(bp);
     }
-    
-    public BudgetPlan getBudgetPlanOut(){
+
+    public BudgetPlan getBudgetPlanOut() {
         return bp;
     }
-    
-    public void selectBp(User u){
+
+    public void selectBp(User u) {
         bp = u.getBpp();                //selects budget plan to use for plan operations, mainly used when entering the budget page
     }
 
@@ -121,7 +121,7 @@ public class BudgetLogic implements Serializable {
      */
     public String compareToUsersSpending(User u) {       //summs the list of the budget and compares to user's total
         month = date.get(Calendar.MONTH) + 1;
-        if (u.getStatus() == -1){
+        if (u.getStatus() == -1) {
             return "Select existing account to compare";
         }
         double difference = 0;
