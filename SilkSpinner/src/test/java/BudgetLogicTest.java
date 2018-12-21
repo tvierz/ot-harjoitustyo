@@ -21,16 +21,17 @@ import silkspinapp.silkspindataobjects.User;
  * @author tvierine
  */
 public class BudgetLogicTest {
+
     BudgetPlan bp;
     int month;
     GregorianCalendar date = new GregorianCalendar();
     BudgetLogic bl;
     User u;
     DataSpec i;
+
     public BudgetLogicTest() {
     }
-    
-    
+
     @Before
     public void setUp() {
         bp = new BudgetPlan();
@@ -41,54 +42,62 @@ public class BudgetLogicTest {
         bp.populateBudget("20, jes");
         u.setBudget(bp);
         bl.selectBp(u);
-        
-        
+
     }
+
     @Test
-    public void refreshFunctionsRight(){
+    public void refreshFunctionsRight() {
         bl.refresh(u);
         u.getBpp().populateBudget("11.0, näin");                  //adds this value to new list
-        assertEquals(u.getBpp().getBudgetData().get(0).getAmount() + "" , 11.0 + ""); //gets the first and supposedly only value if correct
+        assertEquals(u.getBpp().getBudgetData().get(0).getAmount() + "", 11.0 + ""); //gets the first and supposedly only value if correct
     }
+
     @Test
-    public void bpAssignedRight(){
+    public void bpAssignedRight() {
         assertEquals(u.getBpp(), bl.getBudgetPlanOut());        //checks that the budget plan for logic is same as it is for the user
-        
+
     }
-    
+
     @Test
-    public void bpReturnedRight(){
-        
+    public void bpReturnedRight() {
+
         assertEquals(bl.printBudget(), u.getBpp().toString());
     }
+
     @Test
-    public void totalBudgetRight(){
+    public void totalBudgetRight() {
         assertEquals(bl.returntotalbudget(u) + "", 20.0 + "");
     }
+
     @Test
-    public void dataEnteredRight(){
-        
+    public void dataEnteredRight() {
+
         assertEquals(bl.enterData(u, "10.0, i"), "");
     }
+
     @Test
-    public void dataEnteredWrong1(){
-        
+    public void dataEnteredWrong1() {
+
         assertEquals(bl.enterData(u, "10.0hahahahahhahaha, i"), "Please make sure your entry is in format: 'amount, type'");
     }
+
     @Test
-    public void dataEnteredWrong2TooShort(){
+    public void dataEnteredWrong2TooShort() {
         assertEquals(bl.enterData(u, "10.0"), "Please make sure your entry is in format: 'amount, type'");
     }
+
     @Test
-    public void comparisonToUserRight(){
+    public void comparisonToUserRight() {
         u.setData("10, s");                     //user's budget is 20.0, here user adds 10.0 of spendings
         assertEquals(bl.compareToUsersSpending(u), "You have 10.0€ left of your budget");
     }
+
     @Test
-    public void usersWrongAccountNotUsed(){
+    public void usersWrongAccountNotUsed() {
         u.changeAccount("29");
         assertEquals(bl.compareToUsersSpending(u), "Select existing account to compare");
     }
+
     @After
     public void tearDown() {
     }
