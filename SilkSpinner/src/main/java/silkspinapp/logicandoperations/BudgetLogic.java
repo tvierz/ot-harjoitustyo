@@ -49,6 +49,10 @@ public class BudgetLogic implements Serializable {
         u.setBudget(bp);
     }
     
+    public BudgetPlan getBudgetPlanOut(){
+        return bp;
+    }
+    
     public void selectBp(User u){
         bp = u.getBpp();                //selects budget plan to use for plan operations, mainly used when entering the budget page
     }

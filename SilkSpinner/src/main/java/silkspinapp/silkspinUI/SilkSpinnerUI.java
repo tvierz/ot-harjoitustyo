@@ -274,7 +274,7 @@ public class SilkSpinnerUI extends Application {
         enterbudgetbtn.setOnAction(a -> {
             entryopsbudget.setText(bl.enterData(loggeduser, budgetdataentry.getText())); //tells how the operation of adding to budget went
 
-            budgetlisted.setText(bl.printBudget() + "\n Total budget for the month is:" + bl.returntotalbudget(loggeduser));       //refreshes the budgetplan with every entry, so User can see their plan
+            budgetlisted.setText(bl.printBudget() + "\n Total budget for the month is:" + bl.returntotalbudget(loggeduser) + "€");       //refreshes the budgetplan with every entry, so User can see their plan
             budgetdataentry.setText("");    //cleans the text field after data entry
         });
         

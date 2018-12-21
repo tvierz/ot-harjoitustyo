@@ -29,6 +29,7 @@ public class RegisteredUsersLogic implements Serializable {
     public Date now;
     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");      //determines the displayed date
     String returnval;
+    String filename;                               //creates global filename for changing file's name, is Testfile.ser by default as shown in constructor
 //    = new HashMap<>();
 
     /**
@@ -44,13 +45,29 @@ public class RegisteredUsersLogic implements Serializable {
         userlist = new HashMap();
         now = new Date();               //fetches current date upon being constructed
         returnval = sdf.format(now);
+        filename = "Testfile.ser";
+    }
+    
+    /**
+     *
+     * This method allows changing the file in which the app reads from and/or writes to by replacing "Testfile.ser" with another name
+     * 
+     * Note that a textfile that is named "File.ser", where 'file' is the desired filename, MUST be present at the root folder
+     *
+     *This is because java seems to be unable to create the file by itself due to acccess right problems
+     *
+     *
+     */
+    public void changeFilenameForTests(String s){   //changes the write/read destination of this class to Testfile.ser  ##tested
+        filename = s;
+        spin.changeFileForTests(filename);
     }
 
     /**
      * This method is responsible for reading the file where userdata is stored
      * and saving the data for the class to use
      */
-    public void initialize() {
+    public void initialize() {                                                                                          //##tested
         userlist = spin.read();                // reads savefile into the userlist
     }
 
@@ -61,7 +78,7 @@ public class RegisteredUsersLogic implements Serializable {
      *
      *
      */
-    public String showDate() {               //formats the date to display DD.MM.YYYY
+    public String showDate() {               //formats the date to display DD.MM.YYYY           ##Tested        
 
         return returnval;                                //returns the formatted date
     }
@@ -70,7 +87,7 @@ public class RegisteredUsersLogic implements Serializable {
      * Saving of currently active data to a file
      *
      */
-    public void save() {             // saves current data on registeredusers to the local file
+    public void save() {             // saves current data on registeredusers to the local file ##tested
         spin.write(userlist);
     }
 
@@ -81,7 +98,7 @@ public class RegisteredUsersLogic implements Serializable {
      *
      *
      *
-     * @return returns string representing whether or not user is on the list
+     * @return returns string representing whether or not user is on the list       ##tested
      */
     public String listUser(User u) {
         if (userlist.containsKey(u.getUsername()) == false) {     // if user is not on the list, they are added to the list
@@ -107,8 +124,9 @@ public class RegisteredUsersLogic implements Serializable {
      *
      * @return returns the User matching given parameters, otherwise a default
      * "no" user is returned
+     * The "no" user is unique and cannot be created by users
      */
-    public User login(String user, String pass) {                       //creates empty user with name that can't be registered
+    public User login(String user, String pass) {                       //creates empty user with name that can't be registered ##tested
         User logged = new User("no", "no");                 //placeholder for usertest
         if (userlist.containsKey(user)) {                           //if user map contains username
             //____________password checks________________________________________________________
@@ -120,12 +138,12 @@ public class RegisteredUsersLogic implements Serializable {
 
             } else {
                 logged = logged;
-                //does nothing is login is wrong
+                //does nothing is login is wrong (checkstyle required pointless code line)
             }
             //___________________________password check end________________________________________________
         } else {
             logged = logged;
-            //does nothing if username is wrong
+            //does nothing if username is wrong  (checkstyle required pointless code line)
 
         }
         return logged;                                      //returns either the default "no" user, or the user who logged in
@@ -133,13 +151,14 @@ public class RegisteredUsersLogic implements Serializable {
 
     /**
      * Method used for the registration event
-     *
+     *The username chosen to be registered has to be at least 5 symbols long
+     * The chosen password has to be at least 3 letters long
      *
      * @param user username
      * @param pass password
      * @return method returns a string value representing the registration event
      */
-    public String register(String user, String pass) {           //handles registry part and tells ui what happened as result
+    public String register(String user, String pass) {           //handles registry part and tells ui what happened as result  ##tested
         String msg = "Registry has failed";
         if (userlist.containsKey(user) == false) {                         //if username not taken, program lists user and tells them they have been registered
             if (user.length() > 4) {                              //confirms that username is not too short
@@ -172,7 +191,7 @@ public class RegisteredUsersLogic implements Serializable {
      * @return method returns string representation of the data entry event
      *
      */
-    public String enterData(User u, String data) {
+    public String enterData(User u, String data) {                              //##tested
         String[] dubs = data.split(", ");
         if(u.getStatus() == -1){
             return "Account doesn't exist";

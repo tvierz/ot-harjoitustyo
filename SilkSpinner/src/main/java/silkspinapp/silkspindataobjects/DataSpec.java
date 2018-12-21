@@ -60,7 +60,7 @@ public class DataSpec implements Serializable {
 
     @Override
     public String toString() {
-        String s = date + ": " + "AMOUNT: " + amount.toString() + "€" + " TYPE OF EXPENSE: " + type;
+        String s = "Date of entry: " + date + " " + "AMOUNT: " + amount.toString() + "€" + " TYPE OF EXPENSE: " + type;
         StringBuilder sb = new StringBuilder();
         
         return s;          //returns data entries in shape "date, comment, type, amount"

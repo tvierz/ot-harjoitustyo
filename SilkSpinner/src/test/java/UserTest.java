@@ -13,7 +13,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import java.io.*;
+import java.nio.file.Files;
 import static org.junit.Assert.*;
+import silkspinapp.silkspindataobjects.BudgetPlan;
 import silkspinapp.silkspindataobjects.DataSpec;
 import silkspinapp.silkspindataobjects.User;
 
@@ -55,33 +58,33 @@ public class UserTest {
     @Test
     public void hashMapReturnedRight() {
         HashMap<Integer, DataSpec> n = new HashMap<>();
-        u.setData("k, 2, n");
+        u.setData("2, n");
         n = u.getdataEntries();
-        assertEquals(n.get(1).toString(), date +": k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+        assertEquals(n.get(1).toString(),"Date of entry: " + date + " AMOUNT: 2.0€ TYPE OF EXPENSE: n");
 
     }
 
     @Test
     public void userHasDataWhenAdded() {
-        u.setData("k, 2, n");
+        u.setData("2, n");
         assertEquals(u.getData(), "You spun this silk: \n"
-                + date +": k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+                + "Date of entry: " + date + " AMOUNT: 2.0€ TYPE OF EXPENSE: n");
     }
 
     @Test
-    public void userDataNullsWhenAccountDoesnotExist() {
+    public void userDataStatusNegativeWhenAccountDoesnotExist() {
         u.changeAccount(2+"");
-        assertEquals(u.getdataEntries(), null);
+        assertEquals(u.getStatus(), -1);
     }
 
     @Test
     public void userDataAppendsCorrectly() {
 
-        u.setData("o, 5, l");
-        u.setData("k, 2, n");
+        u.setData("5, l");
+        u.setData("2, n");
         assertEquals(u.getData(), "You spun this silk: \n"
-                + date + ": o AMOUNT: 5.0 TYPE OF EXPENSE: l\n"
-                + date + ": k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+                + "Date of entry: " + date + " AMOUNT: 5.0€ TYPE OF EXPENSE: l\n"
+                + "Date of entry: " + date + " AMOUNT: 2.0€ TYPE OF EXPENSE: n");
     }
 
     @Test
@@ -106,19 +109,37 @@ public class UserTest {
         u.changeAccount(2+"");
         assertEquals(u.getStatus(), 2);
     }
+    @Test
+    public void userBpCanBeAssignedAndIsCorrect(){
+        BudgetPlan bp = new BudgetPlan();
+        bp.populateBudget("20, y");
+        u.setBudget(bp);
+        assertEquals(u.getBpp().getBudgetData().get(0).getAmount() + "", 20.0 + "");
+    }
+    @Test
+    public void accountChangeWorksCorrectlyAndAccountCanBeCreated(){
+        u.createaccount();
+        assertEquals(u.changeAccount("2"), "Your account number 2 has been selected");
+        
+    }
+    @Test
+    public void wrongAccountTellsFault(){
+        assertEquals(u.changeAccount("29"), "Account number 29 doesn't exist, make sure you entered correct account number");
+    }
+    
 
     @Test
     public void toStringRight() {
-        assertEquals(u.toString(), "s");
+        assertEquals(u.toString(), u.getUsername());
     }
 
     @Test
     public void setDataOnAccountRight() {
         u.createaccount();
         u.changeAccount(2+"");
-        u.setData("k, 2, n");
+        u.setData("2, n");
         assertEquals(u.getData(), "You spun this silk: \n"
-                + date + ": k AMOUNT: 2.0 TYPE OF EXPENSE: n");
+                +"Date of entry: " + date + " AMOUNT: 2.0€ TYPE OF EXPENSE: n");
 
     }
 
@@ -127,26 +148,26 @@ public class UserTest {
 
         u.createaccount();
         u.changeAccount(2+"");
-        u.setData("k, 2, n");
+        u.setData("2, n");
         u.changeAccount(1+"");
-        u.setData("o, 5, l");
+        u.setData("5, l");
         assertEquals(u.getData(), "You spun this silk: \n"
-                + date + ": o AMOUNT: 5.0 TYPE OF EXPENSE: l");
+                +"Date of entry: " + date + " AMOUNT: 5.0€ TYPE OF EXPENSE: l");
     }
 
     @Test
     public void monthlyTotalIsRight() {
-        u.setData("k, 2.0, y");
-        u.setData("n, 5.0, t");
+        u.setData("2.0, y");
+        u.setData("5.0, t");
         String test = u.monthlyTotal() + "";
         assertEquals(test, "7.0");
     }
     @Test
     public void monthlyTotalIsWrong() {
-        u.setData("k, 2.0, y");
-        u.setData("n, 5.0, t");
-        String test = u.monthlyTotal() + "";
-        assertEquals(test, "7.0");
+        u.setData("2.0, y");
+        u.setData("5.0, t");
+        u.changeAccount("29");
+        assertEquals(u.monthlyTotal() + "", 0.0 + "");
     }
 
     @Test
@@ -156,6 +177,7 @@ public class UserTest {
 
     @After
     public void tearDown() {
+        
     }
 
     // TODO add test methods here.

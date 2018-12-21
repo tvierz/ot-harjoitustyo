@@ -161,7 +161,7 @@ public class User implements Serializable {
      */
     public String changeAccount(String s) {
         int i = 0;
-        String message = "That account number " + s + " doesn't exist, make sure you entered correct account number";
+        String message = "Account number " + s + " doesn't exist, make sure you entered correct account number";
         try {                            //checks that the entered value is integer
             i = Integer.parseInt(s);
 
@@ -188,7 +188,6 @@ public class User implements Serializable {
      *
      */
     public void createaccount() {
-        use = new DataSpec(0.0, "");
         int size = accountlist.size() + 1;
         this.accountlist.put(size, new HashMap<>());  //creates new account with number that is 1 greater than current account amount total
 
@@ -199,6 +198,6 @@ public class User implements Serializable {
     }
 
     public String toString() {
-        return "s";
+        return username;
     }
 }

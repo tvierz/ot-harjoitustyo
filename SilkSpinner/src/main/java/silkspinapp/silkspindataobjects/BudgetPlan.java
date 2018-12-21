@@ -7,7 +7,6 @@ package silkspinapp.silkspindataobjects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 /**
  * essentially a list of specified dataspec objects that have been planned as
@@ -18,7 +17,7 @@ import java.util.GregorianCalendar;
 public class BudgetPlan implements Serializable {
 
     double planned;
-    private ArrayList<DataSpec> n;
+    ArrayList<DataSpec> n;
 
     /**
      * Constructor that is used to create BudgetPlan objects which store
@@ -47,6 +46,9 @@ public class BudgetPlan implements Serializable {
 
     public void addBudget(double d) {
         planned = d;
+    }
+    public double getBudgetPlanned(){
+        return planned;
     }
 
     public ArrayList<DataSpec> getBudgetData() {

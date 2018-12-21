@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,9 +21,12 @@ import silkspinapp.logicandoperations.RegisteredUsersLogic;
  * @author tvierine
  */
 public class RegisteredUsersTest {
-
     public User test;
     public RegisteredUsersLogic ru;
+    Date now;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");      //determines the displayed date
+    String returnval;
+    String filename; 
 
     @Before
     public void setUp() {                       //initializes tests
@@ -30,6 +34,21 @@ public class RegisteredUsersTest {
         ru = new RegisteredUsersLogic();
         ru.listUser(test);                      //user added to list
         ru.listUser(new User("no", "no"));
+        now = new Date();               //fetches current date upon being constructed
+        returnval = sdf.format(now);
+        
+    }
+
+    @Test
+    public void fileNameChangesRight() {         //if filename changes correctly, only "no" user should be present on the list
+        ru.save();                              //saves the data to currently active file
+        ru.changeFilenameForTests("embtii.ser");            //changed the data storage file into "Testfile.ser"
+        ru.initialize();                        //loads the empty file
+        assertEquals(ru.getListMap().size(), 1); //userdata should now only have a single entry, the default "no" user
+    }
+    @Test
+    public void dateIsCorrect(){
+        assertEquals(returnval, ru.showDate());
     }
 
     @Test
@@ -54,9 +73,13 @@ public class RegisteredUsersTest {
     }
 
     @Test
-    public void userCanBeListed() {              //if user can be added into registry, test passes
-        ru.listUser(test);
-        assertTrue(ru.freeUser(test.getUsername()));
+    public void userCanBeListed() {              //if new user can be added into registry, test passes
+        ru.listUser(new User("hahaa", "krökkels"));
+        assertTrue(ru.freeUser("hahaa"));
+    }
+    @Test
+    public void multipleSameUsernamesCantList(){
+        assertEquals(ru.listUser(test), "user is already listed");
     }
 
     @Test
@@ -86,15 +109,27 @@ public class RegisteredUsersTest {
         ru.getListMap().clear();
         assertEquals(ru.getUser("antti"), null);
     }
+
     @Test
-    public void enterDataRequiresParseableIntoDoubleAsSecondValue(){
-        assertEquals(ru.enterData(test, "j, 1, n"), "Data has been entered");
-        
+    public void enterDataRequiresParseableIntoDoubleAsSecondValue() {
+        assertEquals(ru.enterData(test, "1, n"), "Data has been entered");
+
     }
     @Test
-    public void enterDataRejectsNonDoubleParseableValue(){
-        assertEquals(ru.enterData(test, "j, EITOIMI, n"), "Please make sure your entry is in format: 'comment, amount, type'");
-        
+    public void dataEntryGoesRight(){
+        ru.enterData(test, "8005, l");
+        assertEquals(test.getdataEntries().get(1).getAmount() + "", 8005.0 + "");
+    }
+
+    @Test
+    public void enterDataRejectsNonDoubleParseableValue() {
+        assertEquals(ru.enterData(test, "EITOIMI, n"), "Please make sure your entry is in format: 'amount, type'");
+
+    }
+    
+    @Test
+    public void userCalledRight(){
+        assertEquals(ru.getUser("antti"), test);
     }
 
     @Test
@@ -106,7 +141,7 @@ public class RegisteredUsersTest {
     public void dataWrittenRightOnRightAccountOfUser() {
         ru.enterData(test, "3.0");
         ru.getUser(test.getUsername()).createaccount();
-        ru.getUser(test.getUsername()).changeAccount(2+"");
+        ru.getUser(test.getUsername()).changeAccount(2 + "");
         ru.enterData(test, "5.08");
         assertEquals(test.getData(), "You spun this silk: ");
     }
@@ -124,6 +159,7 @@ public class RegisteredUsersTest {
 
     @After
     public void tearDown() {
+        
     }
 
     // TODO add test methods here.

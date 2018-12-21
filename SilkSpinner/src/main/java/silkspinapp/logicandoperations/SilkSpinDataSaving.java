@@ -17,7 +17,15 @@ import silkspinapp.silkspindataobjects.User;
  * This class contains methods to save and read data
  */
 public class SilkSpinDataSaving {
-
+    String filename;
+    
+    public SilkSpinDataSaving(){            //by default, the data is saved to Userdat.ser file
+        filename = "Userdat.ser";
+    }
+    public void changeFileForTests(String s){   //Destination file can be changed here or by calling from RegisteredUsersLogic
+        filename = s;
+    }
+    
     /**
      * Method that is used to save active data into a Userdat.ser file
      *
@@ -28,7 +36,7 @@ public class SilkSpinDataSaving {
     public void write(HashMap<String, User> hm) {                //saves contents of given hashmap in a local file
         try {
             FileOutputStream fos
-                    = new FileOutputStream("Userdat.ser");
+                    = new FileOutputStream(filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(hm);
             oos.close();
@@ -53,7 +61,7 @@ public class SilkSpinDataSaving {
         User nulluser = new User("no", "no");           //resets the null user on every save
         hm.put("no", nulluser);
         try {
-            FileInputStream fis = new FileInputStream("Userdat.ser");
+            FileInputStream fis = new FileInputStream(filename);
             ObjectInputStream ois = new ObjectInputStream(fis);
             hm = (HashMap) ois.readObject();    //writes data into given hashmap
             ois.close();
@@ -66,5 +74,9 @@ public class SilkSpinDataSaving {
         }
         return hm;                  //returns read hashmap containing at least the null user
 
+    }
+    
+    public String filenameReturnForPointlessReasonsForTest(){
+        return filename;
     }
 }
