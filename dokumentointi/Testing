@@ -1,0 +1,22 @@
+TESTING
+
+The application's classes all have automated tests that can be run with maven.
+The tests make sure that the methods of each class function as they should, they also utilize dummy versions of the other classes whenever possible to make sure the methods work as intended even with the custom classes as parameters.
+
+The filesaving methods of the program were tested both without target files and with target files in the root folder, in the end it turned out that for the stability of the tests, the testing target files have to be present, or the program is unable to create them.
+
+The program's week 6 release has been manually downloaded and it functioned as it should have at that time, week 7 release proved to be impossible due to university computers on which the project was mainly completed on, made maven incompatible with the program, including week 6 release which functioned properly on week 6.
+
+
+Installation
+
+The application's week 6 release which is very similar to week 7 version functioned properly when downloaded and operated using maven, on week 7 this became impossible due to problems with maven.
+
+Functionalities
+
+The program has been given improper feeds, in which case the program has functioned as it should have, telling the user that their inputs have been faulty. The program has also been closed with the upper right corner cross within the program, but the program has managed to save all user data despite user not logging out.
+
+
+Testing problems
+
+The program doesn't give any sensible error when the target file doesn't exist, or isn't "initialized" into a .ser file, and even if error message has been given, the tests show 100% completion on the tests, even when the file might not have been found. It's unclear whether or not the tests don't work, or the error message given by netbeans means something else.
