@@ -65,11 +65,34 @@ The data is saved by utilizing streams, which write the HashMap<String, User> di
 
 
 ### Main functions
-The application's main functions are: registering new useraccount, logging in, creating and changing accounts, entering data to accounts, and creating a budget plan.
+The application's main functions are: registering new useraccount, logging in, entering data to accounts, and creating a budget plan.
 
 When the user logs in, the following actions take place, assuming that the username and the user's password are correct. If the user's password is incorrect, the RegisteredUsersLogic would return a "no" user instead of the actual user, and the UI wouldn't change it's scene, but instead change a label to explain the login was incorrect.
 ![Login event sequence](https://github.com/tvierz/Imagerepo/blob/master/SilkSpinLogin.png)
 
 When the user registers a new useraccount, the following actions take place. Assuming a valid username and password have been input, the ui calls for RegisteredUsersLogic's method register, which then creates a new User and puts it to it's own list. After this, the ui calls for RegisteredUsersLogic's save() method, which writes the userlist into the Userdat.ser file. In case the parameters for new account aren't valid, the new account isn't created. the "msg" in picture below represents a String variable that is returned and set as the label to indicate whether the registration was succesful or not, and if it wasn't, why.
 ![Register event sequence](https://github.com/tvierz/Imagerepo/blob/master/SilkSpinRegin.png)
-W
+
+When entering the data to accounts, users must give a valid entry to put into their account. This entry consists of a string of type: "x, y", where x is a string that is parseable to double and y is any string. Assuming a valid entry has been made, the following events take place. The "msg" below represents a string that informs user how the data entry even went. The enterData("x, y") method checks whether x is a valid parseable double, if it's not, the "msg" is returned immediately and a the User's and DataSpec's methods won't be used.
+![Data entry even sequence](https://github.com/tvierz/Imagerepo/blob/master/SilkSpinDaten.png)
+
+Users start with a budget plan, which can be entered the data in similar manner as to an account, but the BudgetPlan can be scrapped and a new one can be made. This is due to need to create new budget plan in certain intervals. The "msg" represents a message "Latest budget plan cleared, add new budget entries". When the refreshbudgetbtn is pressed, the ui calls for BudgetLogic's method refresh(User u), which changes it's internal BudgetPlan variable into a new BudgetPlan(). BudgetLogic then calls for parameter User's method setBudget(), which changes the related User's BudgetPlan into the new BudgetPlan() created earlier.
+![BudgetPlan refresh event sequence](https://github.com/tvierz/Imagerepo/blob/master/SilkSpinBggt.png)
+
+
+The rest of the application works in similar manner, where the UI calls for the method from a logic class, or User class, which updates the properties of a data object, or displays data object's data on the active Scene. The data contained in the data objects is saved every time the program is closed, or specific actions such as logout is preformed.
+
+#### Structural weaknesses
+##### In general
+The program's user interface is constructed by javaFX class, causing possible incompatibilities with programs such as maven if the java is updated from java 8 to java 11 for example. Personally I had no idea on how to update the program to function with the updated java 11/10, so I wasn't able to use maven's operations such as mvn test, mvn test jacoco:report, mvn package at all.
+It is likely that by updating maven to function with the java 10 would resolve these issues, as well as importing a custom class containing methods of javaFX that are no longer part of java 10/11, but as I had no idea how to do any of that, above weakness remained in the code.
+
+The variables and method names used in the program could be renamed more appropriately and uniformly, as although them being easy to understand to some as shorthands of their actual purpose, it can make their meaning uncertain at a glance. Too long variable and method names should be avoided as well, since they would feel like needless clutter in the coding window. In the end this part is more or less a style consideration though.
+
+
+
+##### User Interface
+The program's UI is created by a long javaFX class which can cause incompatibilities with some programs, as mentioned above, but due to singular class creating the entire UI, the code can be a chore to read and comprehend, therefore it would be good idea to possibly split the Scene building parts of the UI class into their own methods. This would also make it easier to modify each Scene separately, and add more scenes without cluttering the main class.
+
+#### Testing
+The branch coverage, and tests overall were difficult to finish, since in last parts of the project, maven couldn't be used to do anything other than checkstyle confirmation. On top of that, the tests for data saving classes required their own testing files, which can clutter the root folder. This could be fixed by adding lines of code that create a new file, initialize the file into a .ser file and the removing the test file once tests are finished. This improvement proved troublesome as sometimes a line of code could perfectly create a file, but some times it couldn't. For the stability and testing considerations, those clutter files were left as is.
