@@ -68,3 +68,4 @@ The data is saved by utilizing streams, which write the HashMap<String, User> di
 The application's main functions are: registering new account, logging in, creating and changing accounts, entering data to accounts, and creating a budget plan.
 
 When the user logs in, the following actions take place
+![Login event sequence](https://github.com/tvierz/Imagerepo/blob/master/SilkSpinLogin.png)
