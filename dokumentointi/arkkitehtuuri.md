@@ -2,7 +2,7 @@
 Ohjelman rakenne voidaan nähdä allaolevasta kuvasta, ohjelma koostuu kolmesta pakkauksesta, silkspinUI, silkspindataobjects ja logicandoperations. Nimien mukaisesti silkspinUI koostuu ohjelman käyttöliittymän rakentavasta javaFX luokasta, silkspindataobjects koostuu ohjelman tietoa tallentavsta olioista, ja logicandoperations sisältää vastaavasti ohjelman logiikasta ja tietojen tallennuksesta vastaavan osan.
 
 ![SilkSpinner's package schematic](https://github.com/tvierz/ot-harjoitustyo/blob/master/laskarit/viikko3/Untitled.png)
-###### Picture 1, The composition of SilkSpin app.
+
 
 Kuvasta voidaan myös nähdä sovelluksen luokat: User, DataSpec, BudgetPlan, BudgetLogic, RegisteredUsersLogic, SilkSpinDataSaving ja SilkSpinnerUI.
 
@@ -65,7 +65,11 @@ The data is saved by utilizing streams, which write the HashMap<String, User> di
 
 
 ### Main functions
-The application's main functions are: registering new account, logging in, creating and changing accounts, entering data to accounts, and creating a budget plan.
+The application's main functions are: registering new useraccount, logging in, creating and changing accounts, entering data to accounts, and creating a budget plan.
 
-When the user logs in, the following actions take place
+When the user logs in, the following actions take place, assuming that the username and the user's password are correct. If the user's password is incorrect, the RegisteredUsersLogic would return a "no" user instead of the actual user, and the UI wouldn't change it's scene, but instead change a label to explain the login was incorrect.
 ![Login event sequence](https://github.com/tvierz/Imagerepo/blob/master/SilkSpinLogin.png)
+
+When the user registers a new useraccount, the following actions take place. Assuming a valid username and password have been input, the ui calls for RegisteredUsersLogic's method register, which then creates a new User and puts it to it's own list. After this, the ui calls for RegisteredUsersLogic's save() method, which writes the userlist into the Userdat.ser file. In case the parameters for new account aren't valid, the new account isn't created. the "msg" in picture below represents a String variable that is returned and set as the label to indicate whether the registration was succesful or not, and if it wasn't, why.
+![Register event sequence](https://github.com/tvierz/Imagerepo/blob/master/SilkSpinRegin.png)
+W
