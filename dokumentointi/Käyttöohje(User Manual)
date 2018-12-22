@@ -1,31 +1,17 @@
-#### Käyttöohje
+USER MANUAL
 
-Ohjelmaa käytetään suorittamalla sitä komentolinjan komennolla java -jar SilkSpinner-1.1-SNAPSHOT.jar
+The program is easiest to use by downloading the program's .jar file, or by generating the .jar for it by using the command: mvn package and then using the command java -jar [program .jar file's name here]
 
-Kun ohjelma on käynnistetty, se avautuu graafiseksi näkymäksi joka pyytää käyttäjätunnusta ja salasanaa.
-Ohjelman käyttämiseksi käyttäjällä pitää olla käyttäjätunnus, joka voidaan luoda siirtymällä rekisteröinti-ikkunaan kirjautumisnäkymän napista.
-Kun käyttäjällä on käyttäjätunnus, sillä voidaan kirjautua sisään itse ohjelmaan.
+When the program starts, it opens a graphical user interface into loginscreen, which asks for the user's username and password, if the user doesn't have an account, they can create a new one by clicking the register button present on the loginscreen. If user has a useraccount, user can log in by writing thir username and password to their fields and clicking login.
 
-Sisäänkirjautumisen yhteydessä päädytään sovelluksen päänäkymään, josta voidaan siirtyä asetuksiin, budjettisivulle, tilisivulle, sekä vaihtaa
-aktiivista tiliä ja kirjautua ulos liittymässä näkyvien nappien avulla. Aktiivisen tilin voi vaihtaa kirjoittamalla tilin numero tekstikenttään ja painamalla nappia, jos tiliä ei ole, 
+User can register new account by entering registry screen from the login screen by clicking the register button. User must the enter unique username and password. The program tells user if there is a problem with the username or password that the user has given the program.
 
-Asetusnäkymässä käyttäjä voi asettaa oman suojasanan joka toimii myös salasanana, luoda uuden tilin, sekä poistaa oman käyttäjätunnuksensa kaikkine tietoineen.
-Suojasanan asettamiseksi, näkymän kirjoituslaatikkoon pitää asettaa uusi suojasana ja vahvistaa se napin avulla.
-Asetusnäkymän kaikki toiminnot toimivat nappien avulla, ja siitä voidaan palata takaisin päänäkymään käyttäen paluunappia.
+When user has logged in, the screen changes into the user screen that has buttons and a textbox, the textbox can take an integer input and can allow user to change their active account. User ca create more accounts from settings screen. If user doesn't have account with number that they have entered, they are notified of it when entering the account screen. User screen also has buttons that allow navigation to account page, settings page and budget page, as well as logout button. The buttons either take the user to their affiliated screens, or in case of logout button, logs the user out of their account.
 
-Budjettisivulla käyttäjä voi antaa ohjelmalle tietoja muodossa "kommentti, luku, tyyppi" jotka kuvaavat yksittäisiä budjettitapahtumia, jos
-tapahtumalle ei haluta antaa kommenttia tai tyyppiä, voidaan ne korvata esimerkiksi kirjoittamalla niiden paikalle "-".
-Kun käyttäjä on syöttänyt tapahtuman sovellukselle, painetaan nappia, jolloin sovellus tallentaa syötteen ja tulostaa ikkunan yläkulmaan kaikki 
-suunnitellut tapahtumat ja lopuksi kokonaissumman syötettyjen tapahtumien lukujen perusteella.
-Kuluvan kuukauden budjettia voidaan verrata aktiiviselle tilille kirjattuihin menoihin, jolloin tiedetään tarkalleen paljonko suunnitellusta budjetista on käytetty, 
-tämä tuloste on negatiivinen jos suunniteltu budjetti on ylitetty.
-Budjettisivulta poistuminen tapahtuu paluunapin avulla, jolloin päästään takaisin päänäkymään.
+In settings screen, user can change their safeword, which functions as alternate password, as well as increase their accounts by one with every click on "create account"-button. User can also remove their account with all the data on it by clicking the "remove account" button, NOTE that this removal is permanent and removes all userdata from the app. User can also return to userscreen from the back button on the screen.
 
-Tilisivulla kerrotaan käyttäjän aktiivisen tilin numero, tai kerrotaan jos haluttua tiliä ei ole olemassa
-Sivun tekstilaatikkoon voidaan syöttää tapahtumat samassa muodossa kuin budjettisivulle, ja ne voidaan tallentaa aktiiviselle tilille nappia painamalla.
-Eri tilien tiedot eivät sekoitu keskenään.
-Aktiivisen tilin kaikki tapahtumat voidaan kutsua sivulla olevasta napista.
-Aktiivisen tilin kaikkien tapahtumien summa voidaan kutsua nappia painamalla.
-Tilinäkymästä voidaan palata takaisin päänäkymään paluunapilla.
+On account screen, user can utilize their active account, enter data on it in format 'number, type', where number has to be value that can be parsed into double, eg. 20, and type can be any type of word/symbol/number that can be parsed into a string. Upon first entry to account screen, user gets a message that notifies them on which of their accounts they have entered, or if they have the account that they tried to activate in user screen. Inserting new data entries happens py typing them into the text box on the screen, and then clicking "enter data to account" button. User can display all the data they entered the active account by pressing the "display account data" button. User can also display the combined total amount of the active account this month by using the "Get this month's total spendings" button. Lastly user can return to user screen by using the back button.
 
-Kaikki napit on nimetty niiden toimintaa kuvaavilla nimillä.
+On account screen, user can create their budget plan, every user starts with an empty budget plan that they can enter items like things they plan to buy and possible spending money into. This can be done by typing data entries, just like in accounts screen, into the text box and then putting them into the budget plan with the "Enter item on your budget plan"-button. User can compare their active account's total spendings to their budget plan by using the "Compare your monthly spendings to your budget"-button, which displays: [budget total]-[account total] number, if it's negative, account's spendings are creater than planned budget, if it's positive, there is extra left on the budget. User can return to the user screen from the back button.
+
+User can also close the application from the cross in the upper right screen, since the application saves all entered data when closing the window normally.
