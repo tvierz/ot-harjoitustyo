@@ -96,3 +96,6 @@ The program's UI is created by a long javaFX class which can cause incompatibili
 
 #### Testing
 The branch coverage, and tests overall were difficult to finish, since in last parts of the project, maven couldn't be used to do anything other than checkstyle confirmation. On top of that, the tests for data saving classes required their own testing files, which can clutter the root folder. This could be fixed by adding lines of code that create a new file, initialize the file into a .ser file and the removing the test file once tests are finished. This improvement proved troublesome as sometimes a line of code could perfectly create a file, but some times it couldn't. For the stability and testing considerations, those clutter files were left as is.
+
+#### Repeating code
+Some parts of the program contain code that can feel similar. It is likely possible to create a separate class to replace these parts, but as the methods have variety of differences, this separate class would then become very cluttered and long so the code was left as is.
