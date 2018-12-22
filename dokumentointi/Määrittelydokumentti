@@ -1,0 +1,49 @@
+SilkSpinner Software Requirements Specification document
+"Spin your own silk the way you want it"
+
+
+The purpose of the application
+
+The application was designed to allow it to be used by multiple users on the same computer, allowing them to plan and update their budget.
+In addition to planning the user's budget, the user can add actions for their money spending, allowing them to keep track on what they spent money on, how much and when.
+Finally, the users can compare their current month's spending with their planned budget to see whether or not they have remained in their budget, or to see how much of their planned budget is left.
+The user can change or remake their budget plan whenever they wish, so they can change their budget plan once they reach the end of the timespan they planned their budget for.
+
+The Users
+
+The program has only a single user type, a normal user. All users can use the same functions of the application.
+
+
+Program
+
+The program consists of 6 different scenes with various different functions, these scenes are: login screen, registry screen, user screen, settings screen, account screen and budget screen.
+
+The application launches into the loginscreen, where one can either login with their existing useraccount, or register new useraccount. Logging in takes the user into userscreen, registering a new account takes the user to registry screen.
+
+From useraccount, the user can enter a settings screen, budget screen and their account screen. User can also change their active account and logout from the app from user screen.
+
+In settings screen user can change their safeword, create new account page, or remove their useraccount and all data on it. User can return to the user screen.
+
+In the account screen, user can enter data entries in form "number, String", which will then be entered to their active account. User can also get their active account's total value, which is all the entries' combined sum. User can call their account's entries into a scroll box and see all their entries. Lastly, user can return back into the user screen.
+
+In the budget screen, user can enter budget entries into a budget plan, create new budget plan, erasing the previous one and compare their active budget plan with their active account. The budget entries will be visible in a scroll box and they update as entries are added to it. Lastly, the user can leave their budget screen.
+
+Properties
+
+-The program works on any computer that can run a .jar program.
+-The program only has normal users
+-The program saves the users' data into a .ser file locally
+
+Functionality
+
+Before the user logs in:
+-User can create a useraccount, which has username and password.The account's username must be a String type, and it must be unique. Both the username and the password must be longer than 4 letters.
+-User can log in with existing account if their username and password have been entered correctly. If their username or password is wrong or doesn't exist, they can't log in and the program tells the user that login failed.
+
+After logging in:
+-User is directed to their user screen.
+-User can use all screens and their functions mentioned in the "Program"-part
+-User can logout
+
+
+
