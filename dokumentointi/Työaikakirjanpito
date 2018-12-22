@@ -2,21 +2,26 @@
 
 Päivä       |      Käytetty aika     |        Mitä tehty
 _________________________________________________________________________
-|13.11      |       2.5 h            |       Alustava määrittlydokumentti |
+|13.11.      |       2.5 h            |       Alustava määrittlydokumentti |
 |___________|________________________|____________________________________|
-|20.11      |       6 h              | SilkSpinner alustava versio,       |
+|20.11.      |       6 h              | SilkSpinner alustava versio,       |
 |           |                        | luokkien User ja RegisteredUsers   |
 |           |                        | testit, työaikakirjanpito          |
 |___________|________________________|____________________________________|
 |27.11.     |       6 h              | SilkSpinner sovellukseen lisätty   |
 |           |                        | paikallinen tallennus, testejä     |
 |           |                        | täydennetty, työaikakijanpito,     |
-|	    |			     | sovelluksen logiikkaa eroteltu     |
-|	    | 			     | käyttöliittymästä		  |
+|	    |			     |                     sovelluksen logiikkaa eroteltu     |
+|	    | 			     |                   käyttöliittymästä		  |
 |___________|________________________|____________________________________|
 4.12.               7h                    SilkSpinner sovelluksen laajennus,
                                           Testien korjaus ja laajennus
  ____________________________________________________________________________
-11.12               11 h                SilkSpinner laajennus lisäämällä budjettitoiminnallisuus
-                                        dokumentoinnin täydennys
-Aikaa käytetty yhteensä: 32.5 h
+11.12.               11 h                added javadocs to SilkSpinner, added budget page functionality
+                                        
+____________________________________________________________________________________________
+21.12.               9 h                 Attempted to update SilkSpinner tests, and some functional changes
+________________________________________________________________________________________
+22.12.              6 h                   Finished final documentation
+                                       
+Aikaa käytetty yhteensä: 56.5 h
