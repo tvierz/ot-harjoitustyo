@@ -1,7 +1,7 @@
 ## Ojelmistotekniikan Harjoitustyö SilkSpinner
 
 ##### Dokumentointi
-[Määrittelydokumentti](https://github.com/tvierz/ot-harjoitustyo/blob/master/dokumentointi/alustava%20m%C3%A4%C3%A4rittelydokumentti)
+[Määrittelydokumentti](https://github.com/tvierz/ot-harjoitustyo/blob/master/dokumentointi/M%C3%A4%C3%A4rittelydokumentti)
 
 
 [Työaikakirjanpito](https://github.com/tvierz/ot-harjoitustyo/blob/master/dokumentointi/Ty%C3%B6aikakirjanpito)
